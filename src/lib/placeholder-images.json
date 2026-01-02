@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "Abstract background for hero section",
+      "imageUrl": "https://images.unsplash.com/photo-1749006590475-4592a5dbf99f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGNpcmN1aXR8ZW58MHx8fHwxNzY3MzY1MDQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract circuit"
+    },
+    {
+      "id": "capability-winding",
+      "description": "Precision coil winding",
+      "imageUrl": "https://images.unsplash.com/photo-1752648861667-5fc5bd8fbf34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb2lsJTIwd2luZGluZ3xlbnwwfHx8fDE3NjczNjUwNDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coil winding"
+    },
+    {
+      "id": "capability-pcb",
+      "description": "PCB printing and assembly",
+      "imageUrl": "https://images.unsplash.com/photo-1515630278258-407f66498911?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjaXJjdWl0JTIwYm9hcmR8ZW58MHx8fHwxNzY3MzUzMzE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "circuit board"
+    },
+    {
+      "id": "capability-testing",
+      "description": "Advanced testing equipment",
+      "imageUrl": "https://images.unsplash.com/photo-1681716262099-9d3a4fc98bdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8b3NjaWxsb3Njb3BlJTIwbGFifGVufDB8fHx8MTc2NzM2NTA0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "oscilloscope lab"
+    },
+    {
+      "id": "capability-prototyping",
+      "description": "Rapid prototyping services",
+      "imageUrl": "https://images.unsplash.com/photo-1611117775350-ac3950990985?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHwzZCUyMHByaW50ZXJ8ZW58MHx8fHwxNzY3MzMwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3d printer"
+    },
+    {
+      "id": "industry-defense",
+      "description": "Sensors for defense applications",
+      "imageUrl": "https://images.unsplash.com/photo-1611507873005-1d3d25de7ff0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtaWxpdGFyeSUyMHJhZGFyfGVufDB8fHx8MTc2NzM2NTA0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "military radar"
+    },
+    {
+      "id": "industry-automotive",
+      "description": "Sensors for the automotive industry",
+      "imageUrl": "https://images.unsplash.com/photo-1559946363-4d6c452d7632?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhdXRvbW90aXZlJTIwc2Vuc29yc3xlbnwwfHx8fDE3NjczNjUwNDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "automotive sensors"
+    },
+    {
+      "id": "industry-automation",
+      "description": "Solutions for industrial automation",
+      "imageUrl": "https://images.unsplash.com/photo-1680783954745-3249be59e527?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxyb2JvdGljJTIwYXJtfGVufDB8fHx8MTc2NzM2NTA0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "robotic arm"
+    },
+    {
+      "id": "industry-agriculture",
+      "description": "Technology for modern agriculture",
+      "imageUrl": "https://images.unsplash.com/photo-1568680870491-590cd4e224ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0cmFjdG9yJTIwZmllbGR8ZW58MHx8fHwxNzY3MzQwMjQ3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tractor field"
+    }
+  ]
 }
