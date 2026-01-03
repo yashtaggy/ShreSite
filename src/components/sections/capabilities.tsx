@@ -90,13 +90,13 @@ export function Capabilities() {
 function CapabilityText({ cap, index, progress }: any) {
   const opacity = useTransform(
     progress,
-    [index * 0.25, index * 0.25 + 0.1, (index + 1) * 0.25 - 0.1, (index + 1) * 0.25],
+    [index * 0.23, index * 0.23 + 0.14, (index + 1) * 0.23 - 0.14, (index + 1) * 0.23],
     [0, 1, 1, 0]
   );
   
   const y = useTransform(
     progress,
-    [index * 0.25, index * 0.25 + 0.1, (index + 1) * 0.25 - 0.1, (index + 1) * 0.25],
+    [index * 0.23, index * 0.23 + 0.14, (index + 1) * 0.23 - 0.14, (index + 1) * 0.2],
     [20, 0, 0, -20]
   );
 

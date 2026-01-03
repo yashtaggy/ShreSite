@@ -1,6 +1,7 @@
 import { Capabilities } from '@/components/sections/capabilities';
 import { CompetitiveEdge } from '@/components/sections/competitive-edge';
 import { Hero } from '@/components/sections/hero';
+import { InfrastructureReach } from "@/components/sections/infrastructure-reach";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Capabilities />
       <CompetitiveEdge />
+      <InfrastructureReach />
     </>
   );
 }
