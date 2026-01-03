@@ -3,12 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Aperture, Menu } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -18,124 +17,145 @@ const navLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
-function NavLink({
-  href,
-  label,
-  className,
-  onClick,
-}: {
-  href: string;
-  label: string;
-  className?: string;
-  onClick?: () => void;
-}) {
+export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isActive = pathname === href;
+
+  // 1. Setup Scroll Progress Logic
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // 2. Handle background transition on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <Link
-      href={href}
-      onClick={onClick}
+    <header 
       className={cn(
-        'group relative text-[16px] font-medium transition-colors duration-200',
-
-        isActive
-          ? 'text-primary'
-          : 'text-muted-foreground hover:text-foreground',
-        className
+        "fixed top-0 z-50 w-full transition-all duration-500 ease-in-out",
+        isScrolled 
+          ? "bg-white/90 backdrop-blur-md py-3 shadow-sm border-b border-slate-200/60" 
+          : "bg-transparent py-8 border-b border-transparent"
       )}
     >
-      {label}
-
-      <span
-        className={cn(
-        'absolute -bottom-1 left-0 h-[2px] w-full rounded bg-primary transition-all duration-200',
-        isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'
-        )}
-      />
-    </Link>
-  );
-}
-
-export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur shadow-sm supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         
-        {/* LOGO */}
-        <Link href="/" className="flex items-center">
+        {/* LOGO - Smoothly scales down */}
+        <Link href="/" className="flex items-center transition-transform duration-500">
           <Image
-            src="/logo.png"   // <-- PUT YOUR LOGO FILE NAME HERE
+            src="/logo.png"
             alt="Shreyash Solutions Logo"
-            width={240}
-            height={64}
+            width={200}
+            height={50}
             priority
-            className="h-16 w-auto"
+            className={cn(
+              "w-auto transition-all duration-500",
+              isScrolled ? "h-10" : "h-12 md:h-14"
+            )}
           />
         </Link>
 
-        {/* DESKTOP NAV */}
-        <nav className="hidden gap-8 md:flex">
-          {navLinks.map((link) => (
-            <div key={link.href} className="group">
-              <NavLink href={link.href} label={link.label} />
-            </div>
-          ))}
+        {/* DESKTOP NAV - Premium Spacing & Typography */}
+        <nav className="hidden items-center gap-10 lg:flex">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "relative text-[13px] font-bold uppercase tracking-[0.15em] transition-colors duration-300",
+                  isActive ? "text-accent" : "text-slate-600 hover:text-black"
+                )}
+              >
+                {link.label}
+                {isActive && (
+                  <motion.span 
+                    layoutId="header-underline"
+                    className="absolute -bottom-1 left-0 h-[1.5px] w-full bg-accent"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* CTA + MOBILE MENU */}
-        <div className="flex items-center gap-3">
-        <Button
-          asChild
-          size="lg"
-          className="hidden md:inline-flex rounded-full px-6 shadow-md hover:shadow-lg transition-shadow"
-        >
-            <Link href="/contact?form=quote">Request a Quote</Link>
-          </Button>
+        {/* ACTION AREA - Minimalist CTA */}
+        <div className="flex items-center gap-8">
+          <Link 
+            href="/contact?form=quote"
+            className={cn(
+              "hidden md:block text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-300 border-b-2 pb-1",
+              isScrolled 
+                ? "text-slate-900 border-accent hover:border-slate-900" 
+                : "text-slate-800 border-accent/40 hover:border-accent"
+            )}
+          >
+            Request a Quote
+          </Link>
 
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-
-            <SheetContent side="left" className="w-72">
-              <Link
-                href="/"
-                className="mb-8 flex items-center space-x-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Aperture className="h-6 w-6 text-primary" />
-                <span className="font-semibold">Shreyash Solutions</span>
-              </Link>
-
-              <nav className="flex flex-col space-y-5">
-                {navLinks.map((link) => (
-                  <NavLink
-                    key={link.href}
-                    href={link.href}
-                    label={link.label}
-                    className="text-base"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  />
-                ))}
-              </nav>
-
-              <Button
-                asChild
-                className="mt-10 w-full"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Link href="/contact?form=quote">Request a Quote</Link>
-              </Button>
-            </SheetContent>
-          </Sheet>
+          {/* MOBILE TOGGLE */}
+          <button 
+            className="lg:hidden p-2 text-slate-900 transition-transform active:scale-90"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
+
+      {/* 3. ELITE SCROLL PROGRESS INDICATOR (1px precision line) */}
+      <motion.div
+        className="absolute bottom-0 left-0 h-[1.5px] bg-accent origin-left"
+        style={{ scaleX }}
+      />
+
+      {/* MOBILE OVERLAY */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="absolute top-full left-0 w-full bg-white border-b border-slate-200 overflow-hidden lg:hidden shadow-xl"
+          >
+            <nav className="flex flex-col px-8 py-12 gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-3xl font-bold tracking-tight text-slate-900 hover:text-accent transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link 
+                href="/contact?form=quote"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-4 text-accent font-bold uppercase tracking-widest border-l-4 border-accent pl-4"
+              >
+                Request a Quote →
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

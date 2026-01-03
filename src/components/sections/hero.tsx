@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 export function Hero() {
   return (
     <section className="relative w-full bg-white">
-      <div className="mx-auto max-w-7xl px-6 pt-20 pb-24">
+      <div className="mx-auto max-w-7xl px-6 pt-40 pb-24 md:pt-48 md:pb-32">
 
         {/* POSITIONING BADGE */}
         <div className="inline-flex items-center rounded-full border bg-white px-4 py-1 text-sm text-muted-foreground shadow-sm fade-up">
-          Global-Standard Potentiometric & Sensor Manufacturer - Designed & Built in INDIA 
+          Global-Standard Potentiometric & Sensor Manufacturer - Designed & Built in INDIA
         </div>
 
         {/* MAIN CONTENT */}
