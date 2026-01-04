@@ -149,7 +149,13 @@ export function CompetitiveEdge() {
                <div className="flex flex-col items-center gap-3 group cursor-default">
                  <img src="/logos/rci.png" alt="RCI Logo" className="h-12 w-auto object-contain transition-transform group-hover:scale-110" />
                  <span className="text-[8px] font-bold tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors uppercase">RCI DRDO Registered</span>
-               </div>               
+               </div>   
+
+               <div className="flex flex-col items-center gap-3 group cursor-default">
+                 <img src="/logos/msme.png" alt="MSME Logo" className="h-12 w-auto object-contain transition-transform group-hover:scale-110" />
+                 <span className="text-[8px] font-bold tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors uppercase">Micro, Small and Medium Enterprises</span>
+               </div>             
+               
             </div>
           </div>
         </div>

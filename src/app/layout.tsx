@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
+import { BackToTop } from "@/components/ui/back-to-top";
 
 export const metadata: Metadata = {
   title: {
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <BackToTop />
         </div>
         <Toaster />
       </body>
