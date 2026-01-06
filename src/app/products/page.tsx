@@ -115,7 +115,7 @@ export default function ProductsPage() {
             <motion.div 
               key={product.id}
               whileHover={{ y: -8 }}
-              className="group bg-white border border-slate-200 p-8 rounded-sm transition-all hover:shadow-xl hover:border-accent/30"
+              className="group bg-white border border-slate-200 p-8 rounded-md transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-accent/50"
             >
               <div className="aspect-square relative mb-8 overflow-hidden bg-slate-50 rounded-sm border border-slate-100">
                 <Image 
