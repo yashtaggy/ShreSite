@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Zap, BarChart3, Microscope, Factory, CheckCircle } from 'lucide-react';
+import { ShieldCheck, Zap, Microscope, CheckCircle, Factory } from 'lucide-react';
 
 const machinery = [
   { id: 1, src: '/images/infra/machine1.jpg', title: 'Precision Winding Unit' },
@@ -14,103 +14,180 @@ const machinery = [
 
 export default function QualityInfrastructure() {
   return (
-    <main className="bg-white min-h-screen pt-32 pb-24 text-slate-900">
+    <main className="bg-white min-h-screen pt-32 pb-24 text-slate-900 overflow-x-hidden">
+      {/* Blueprint Pattern Background */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
 
       <div className="container mx-auto px-6 relative z-10">
         
         {/* HEADER SECTION */}
-        <div className="max-w-4xl mb-20">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3 text-accent mb-6">
+        <header className="max-w-4xl mb-16 md:mb-24">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            className="flex items-center gap-3 text-accent mb-6"
+          >
             <div className="h-[2px] w-8 bg-accent" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em]">Facility & Standards</span>
           </motion.div>
           
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8"
+          >
             Quality & <br/>
             <span className="text-accent italic font-serif font-light">Infrastructure.</span>
-          </h1>
-          <p className="text-xl text-slate-600 max-w-2xl leading-relaxed font-medium">
-            Our Pune facility is designed for zero-defect manufacturing, combining advanced machinery with strict quality control protocols.
-          </p>
-        </div>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed font-medium"
+          >
+            Our Pune facility is engineered for zero-defect manufacturing, combining advanced technology with strict verification protocols.
+          </motion.p>
+        </header>
 
-        {/* MACHINERY GRID - Masonry Style */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-32">
-          <div className="md:col-span-2 h-[400px] bg-slate-100 rounded-sm overflow-hidden relative group">
-            <img src={machinery[0].src} alt={machinery[0].title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 text-[10px] font-bold uppercase tracking-widest border border-slate-200">{machinery[0].title}</div>
+        {/* MACHINERY GRID - Fully Responsive Masonry-style */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-24 md:mb-32">
+          {/* Main Large Image */}
+          <div className="md:col-span-2 h-[300px] md:h-[450px] bg-slate-100 rounded-sm overflow-hidden relative group">
+            <img 
+              src={machinery[0].src} 
+              alt={machinery[0].title} 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            />
+            <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white/95 backdrop-blur px-4 py-2 text-[9px] font-bold uppercase tracking-widest border border-slate-200">
+              {machinery[0].title}
+            </div>
           </div>
-          <div className="h-[400px] bg-slate-100 rounded-sm overflow-hidden relative group">
-            <img src={machinery[1].src} alt={machinery[1].title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 text-[10px] font-bold uppercase tracking-widest border border-slate-200">{machinery[1].title}</div>
+
+          {/* Side Image */}
+          <div className="h-[300px] md:h-[450px] bg-slate-100 rounded-sm overflow-hidden relative group">
+            <img 
+              src={machinery[1].src} 
+              alt={machinery[1].title} 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            />
+            <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur px-4 py-2 text-[9px] font-bold uppercase tracking-widest border border-slate-200">
+              {machinery[1].title}
+            </div>
           </div>
+
+          {/* Bottom Row Images */}
           {machinery.slice(2).map((item) => (
-            <div key={item.id} className="h-[300px] bg-slate-100 rounded-sm overflow-hidden relative group">
-              <img src={item.src} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 text-[10px] font-bold uppercase tracking-widest border border-slate-200">{item.title}</div>
+            <div key={item.id} className="h-[250px] md:h-[350px] bg-slate-100 rounded-sm overflow-hidden relative group">
+              <img 
+                src={item.src} 
+                alt={item.title} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+              />
+              <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur px-4 py-2 text-[9px] font-bold uppercase tracking-widest border border-slate-200">
+                {item.title}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* THE "WHY TRUST" SECTION - Dense Content */}
-        <div className="grid lg:grid-cols-12 gap-16 items-start py-20 border-t border-slate-100">
-          <div className="lg:col-span-4 sticky top-32">
-            <h2 className="text-4xl font-black tracking-tight mb-6">Why Trust <br/>Shreyash Solutions?</h2>
-            <p className="text-slate-500 mb-8">Our reputation is built on consistency and technical transparency. We invite our clients to understand the depth of our quality commitment.</p>
-            <div className="space-y-4">
-              {[
-                { icon: <ShieldCheck size={20}/>, text: 'ISO 9001:2015 Certified' },
-                { icon: <CheckCircle size={20}/>, text: '100% In-house Testing' },
-                { icon: <Microscope size={20}/>, text: 'Advanced R&D Cell' }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 text-sm font-bold text-slate-800">
-                  <span className="text-accent">{item.icon}</span> {item.text}
-                </div>
-              ))}
+        {/* THE "WHY TRUST" SECTION - Responsive Desktop (Sticky) to Mobile (Stacked) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start py-12 lg:py-20 border-t border-slate-100">
+          
+          {/* LEFT: Branding & Stats */}
+          <div className="lg:col-span-4 lg:sticky lg:top-32 space-y-8">
+            <div className="max-w-md">
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+                Why Trust <br className="hidden lg:block"/>Shreyash Solutions?
+              </h2>
+              <p className="text-slate-500 text-lg leading-relaxed mb-10">
+                Our reputation is built on consistency and technical transparency. 
+                We invite our clients to understand the depth of our quality commitment.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                {[
+                  { icon: <ShieldCheck size={20}/>, text: 'ISO 9001:2015 Certified' },
+                  { icon: <CheckCircle size={20}/>, text: '100% In-house Testing' },
+                  { icon: <Microscope size={20}/>, text: 'Advanced R&D Cell' }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-4 p-5 bg-slate-50 border border-slate-100 rounded-sm text-sm font-bold text-slate-900">
+                    <span className="text-accent">{item.icon}</span> {item.text}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="lg:col-span-8 grid md:grid-cols-2 gap-10">
-            {/* Detailed Bullet Points */}
-            <div className="space-y-8">
-              <div>
-                <h4 className="font-black text-accent text-xs uppercase tracking-widest mb-4">Quality Control Process</h4>
-                <ul className="space-y-4 text-sm text-slate-500 leading-relaxed list-none">
-                  <li className="flex gap-2"><strong>•</strong> Raw Material Inspection: Strict verification of incoming alloys, plastics, and conductive elements to ensure they meet RoHS/REACH standards.</li>
-                  <li className="flex gap-2"><strong>•</strong> In-Process Monitoring: Real-time resistance tracking during the winding and assembly phases to catch variances early.</li>
-                  <li className="flex gap-2"><strong>•</strong> Final Batch Testing: Every single product is subjected to electrical tolerance checks and mechanical torque verification.</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-black text-accent text-xs uppercase tracking-widest mb-4">Infrastructure Capabilities</h4>
-                <ul className="space-y-4 text-sm text-slate-500 leading-relaxed list-none">
-                  <li className="flex gap-2"><strong>•</strong> Production Capacity: Scalable setup capable of handling prototype orders to mass production volumes without quality drop-offs.</li>
-                  <li className="flex gap-2"><strong>•</strong> Custom Tooling: In-house workshop for creating custom fixtures and housing molds based on specific client drawings.</li>
-                  <li className="flex gap-2"><strong>•</strong> Calibration Lab: Environmentally controlled lab for the calibration of high-precision sensors used in medical and aerospace sectors.</li>
-                </ul>
-              </div>
-            </div>
+          {/* RIGHT: Detailed Technical Columns */}
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+              
+              {/* Technical Processes Column */}
+              <div className="space-y-12">
+                <div>
+                  <h4 className="font-black text-accent text-[10px] uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
+                    <Factory size={14} /> Quality Control Process
+                  </h4>
+                  <ul className="space-y-6 text-sm text-slate-500 leading-relaxed">
+                    <li className="flex gap-4">
+                      <span className="text-accent font-black">01.</span>
+                      <span><strong>Raw Material Inspection:</strong> We verify all incoming alloys, medical-grade plastics, and conductive elements to ensure they meet RoHS compliance.</span>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-accent font-black">02.</span>
+                      <span><strong>In-Process Monitoring:</strong> Real-time resistance and linearity tracking during the winding phases to eliminate variances instantly.</span>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-accent font-black">03.</span>
+                      <span><strong>Final Inspection:</strong> Every unit undergoes 100% electrical tolerance checks and mechanical torque verification before packaging.</span>
+                    </li>
+                  </ul>
+                </div>
 
-            <div className="space-y-8">
-              <div>
-                <h4 className="font-black text-accent text-xs uppercase tracking-widest mb-4">Environmental Commitment</h4>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  We are committed to sustainable manufacturing. Our facility utilizes energy-efficient machinery and ensures that all scrap metals and plastics are recycled through certified industrial waste partners. Our products are designed for long-life cycles, reducing the environmental impact of electronic waste.
-                </p>
+                <div>
+                  <h4 className="font-black text-accent text-[10px] uppercase tracking-[0.3em] mb-6">Infrastructure Scope</h4>
+                  <ul className="space-y-6 text-sm text-slate-500 leading-relaxed">
+                    <li className="flex gap-4">
+                      <span className="text-accent font-black">01.</span>
+                      <span><strong>Production Scale:</strong> Our facility is optimized to handle both high-mix low-volume (HMLV) prototypes and mass production.</span>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-accent font-black">02.</span>
+                      <span><strong>Custom Tooling:</strong> We maintain an in-house workshop for developing custom molds and calibration fixtures for unique client needs.</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div>
-                <h4 className="font-black text-accent text-xs uppercase tracking-widest mb-4">Technical Documentation</h4>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  Transparency is key. We provide comprehensive data sheets, COAs (Certificate of Analysis), and test reports upon request. Our technical team maintains a digital log of every batch produced, allowing for full traceability even years after the product has been deployed in the field.
-                </p>
+
+              {/* Documentation & Values Column */}
+              <div className="space-y-12">
+                <div className="p-8 bg-slate-50 border border-slate-100 rounded-sm">
+                  <h4 className="font-black text-[10px] uppercase tracking-[0.3em] mb-4 text-slate-900">Environmental Standards</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed italic">
+                    "We utilize energy-efficient machinery and ensure all industrial scrap is recycled through certified partners, reducing our carbon footprint."
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-black text-accent text-[10px] uppercase tracking-[0.3em] mb-6">Technical Transparency</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">
+                    Transparency is our priority. We provide comprehensive data sheets, COAs, and test reports. Our digital logs maintain full batch traceability for 5+ years.
+                  </p>
+                </div>
+
+                <div className="p-8 bg-slate-900 text-white rounded-sm shadow-2xl shadow-slate-200">
+                  <div className="flex items-center gap-3 mb-4 text-accent">
+                    <Zap size={18} fill="currentColor" />
+                    <h4 className="font-black text-[10px] uppercase tracking-[0.3em] text-white">Zero Defect Policy</h4>
+                  </div>
+                  <p className="text-[12px] leading-relaxed opacity-80">
+                    Our internal target is 0 PPM rejection. Through continuous training and automated testing rigs, we maintain a standard that rivals global OEMs.
+                  </p>
+                </div>
               </div>
-              <div className="p-6 bg-slate-900 text-white rounded-sm">
-                <h4 className="font-black text-xs uppercase tracking-widest mb-3">Zero Defect Policy</h4>
-                <p className="text-[11px] leading-relaxed opacity-70">
-                  Our internal target is 0 PPM (Parts Per Million) rejection rate. Through continuous staff training and automated testing rigs, we maintain a quality standard that rivals global manufacturers.
-                </p>
-              </div>
+
             </div>
           </div>
         </div>
