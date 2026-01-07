@@ -1,107 +1,131 @@
-import type { Metadata } from 'next';
+'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Plane, Stethoscope, Settings2, Truck, Zap, ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-export const metadata: Metadata = {
-  title: 'Industries We Serve',
-  description: 'Providing robust sensor solutions for defense, automotive, industrial automation, and agriculture.',
-};
-
-const industries = [
+const sectors = [
   {
-    id: 'defense',
-    name: 'Defense',
-    imageId: 'industry-defense',
-    useCases: [
-      'Position feedback for missile fins and gimbals',
-      'Throttle control for UAVs and ground vehicles',
-      'Fluid level sensing in hydraulic systems',
-      'Joysticks and control grips for remote weapon stations',
-    ],
+    id: 'aerospace',
+    title: 'Aerospace & Defense',
+    icon: <Plane className="w-6 h-6" />,
+    image: '/industries/aerospace.jpg', // Place your image here
+    description: 'Mission-critical sensing for cockpit controls, UAV surfaces, and radar positioning where failure is not an option. Our components are engineered to withstand extreme G-forces, high-altitude atmospheric shifts, and electromagnetic interference, ensuring absolute signal integrity in flight-safety systems and defense electronics.',
+    specs: ['MIL-SPEC Durability', 'High Vibration Resistance', 'Redundant Circuitry'],
   },
   {
-    id: 'automotive',
-    name: 'Automotive',
-    imageId: 'industry-automotive',
-    useCases: [
-      'Throttle and pedal position sensing',
-      'Steering angle measurement',
-      'Suspension height and ride control',
-      'Fuel and DEF level monitoring in commercial vehicles',
-    ],
+    id: 'medical',
+    title: 'Medical Technology',
+    icon: <Stethoscope className="w-6 h-6" />,
+    image: '/industries/medical.jpg',
+    description: 'Precision feedback for diagnostic imaging, surgical robotics, and fluid management systems with biocompatible standards. We provide ultra-low torque solutions for delicate instrumentation and high-resolution feedback for MRI/CT gantry positioning, meeting the stringent hygiene and accuracy requirements of modern healthcare.',
+    specs: ['Sub-micron Accuracy', 'Clean-room Assembly', 'Ultra-low Torque'],
   },
   {
-    id: 'industrial-automation',
-    name: 'Industrial Automation',
-    imageId: 'industry-automation',
-    useCases: [
-      'Position feedback for robotic arms and actuators',
-      'Valve position control in process industries',
-      'Material handling and conveyor systems',
-      'Joysticks for heavy machinery and cranes',
-    ],
+    id: 'automation',
+    title: 'Industrial Automation',
+    icon: <Settings2 className="w-6 h-6" />,
+    image: '/industries/automation.jpg',
+    description: 'The nervous system for robotic joints, CNC feedback, and high-speed packaging lines requiring long-cycle stability. Designed for 24/7 heavy-duty operations, our sensors provide the millisecond response times necessary for synchronized multi-axis motion control and automated manufacturing environments.',
+    specs: ['20M+ Cycle Life', 'IP67 Sealing', 'High Frequency Response'],
   },
   {
-    id: 'agriculture',
-    name: 'Agriculture',
-    imageId: 'industry-agriculture',
-    useCases: [
-      'Steering and implement position for autonomous tractors',
-      'Boom height control for sprayers',
-      'Feed and seed level monitoring in hoppers',
-      'Control levers for harvesters and combines',
-    ],
+    id: 'machinery',
+    title: 'Heavy Machinery',
+    icon: <Truck className="w-6 h-6" />,
+    image: '/industries/machinery.jpg',
+    description: 'Ruggedized positioning for hydraulic booms, agricultural steering, and crane stabilization in extreme environments. Our heavy-duty sensors are built into sealed housings that resist dust, mud, and high-pressure washdowns, providing reliable angular feedback for operator safety and machine efficiency in construction and mining.',
+    specs: ['Impact Resistance', 'Shielded Signal', 'Weather-proof Housing'],
   },
+  {
+    id: 'renewables',
+    title: 'Renewable Energy',
+    icon: <Zap className="w-6 h-6" />,
+    image: '/industries/renewables.jpg',
+    description: 'Optimizing solar tracking arrays and wind turbine pitch control for maximum efficiency and long-term UV exposure. These components are specifically treated for outdoor longevity, ensuring that tracking mechanisms remain precise over decades of exposure to harsh sunlight, wind loads, and fluctuating temperatures.',
+    specs: ['UV Stable Housing', 'Zero Maintenance', 'Long-term Stability'],
+  }
 ];
 
 export default function IndustriesPage() {
   return (
-    <div className="container mx-auto max-w-6xl py-12 px-4 md:px-6 lg:py-24">
-      <div className="text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl font-headline">Industries We Serve</h1>
-        <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
-          Our solutions are engineered to withstand the unique challenges of your industry, delivering reliability where it matters most.
-        </p>
-      </div>
+    <main className="bg-white min-h-screen pt-32 pb-24 text-slate-900 overflow-hidden">
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
 
-      <Tabs defaultValue="defense" className="mt-16 w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-          {industries.map((industry) => (
-            <TabsTrigger key={industry.id} value={industry.id}>
-              {industry.name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {industries.map((industry) => {
-          const image = PlaceHolderImages.find((img) => img.id === industry.imageId);
-          return (
-            <TabsContent key={industry.id} value={industry.id} className="mt-8 rounded-lg border bg-card p-6 lg:p-8">
-              <div className="grid gap-8 md:grid-cols-2 md:items-center">
-                <div className="relative aspect-video h-full w-full overflow-hidden rounded-md">
-                  {image && (
-                    <Image
-                      src={image.imageUrl}
-                      alt={image.description}
-                      data-ai-hint={image.imageHint}
-                      fill
-                      className="object-cover transition-transform duration-300 hover:scale-105"
-                    />
-                  )}
+      <div className="container mx-auto px-6 relative z-10">
+        
+        {/* HEADER */}
+        <div className="max-w-4xl mb-20">
+  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3 text-accent mb-6">
+    <div className="h-[2px] w-8 bg-accent" />
+    <span className="text-[10px] font-black uppercase tracking-[0.4em]">What We Do</span>
+  </motion.div>
+  
+  <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
+    Industries <br/>
+    <span className="text-accent italic font-serif font-light">We Serve.</span>
+  </h1>
+  <p className="text-xl text-slate-600 max-w-2xl leading-relaxed font-medium">
+    High-quality sensors and potentiometers designed for the most demanding technical fields in India and beyond.
+  </p>
+</div>
+
+        {/* 3x2 GRID SYSTEM */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {sectors.map((sector, idx) => (
+            <motion.div
+              key={sector.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              // Custom logic: last two items center themselves on large screens if there are exactly 5 items
+              className={`group bg-slate-50 border border-slate-200 rounded-sm overflow-hidden flex flex-col transition-all duration-500 hover:shadow-2xl hover:shadow-slate-200 hover:-translate-y-1
+                ${idx >= 3 ? 'lg:translate-x-[50%]' : ''}`}
+            >
+              {/* Image Container */}
+              <div className="relative h-56 w-full overflow-hidden bg-slate-200">
+                <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-all duration-500 z-10" />
+                <img 
+                  src={sector.image} 
+                  alt={sector.title}
+                  className="w-full h-full object-cover group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                />
+              </div>
+
+              {/* Content Container */}
+              <div className="p-8 flex-grow flex flex-col">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-accent bg-white p-3 border border-slate-100 shadow-sm group-hover:bg-accent group-hover:text-white transition-colors">
+                    {sector.icon}
+                  </div>
+                  <h3 className="text-2xl font-black tracking-tight">{sector.title}</h3>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold font-headline">Use Cases in {industry.name}</h3>
-                  <ul className="mt-6 list-disc space-y-3 pl-5 text-muted-foreground">
-                    {industry.useCases.map((useCase) => (
-                      <li key={useCase}>{useCase}</li>
+                
+                <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
+                  {sector.description}
+                </p>
+
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-2">
+                    {sector.specs.map((spec) => (
+                      <span key={spec} className="px-2 py-1 bg-white border border-slate-200 text-[9px] font-bold uppercase tracking-widest text-slate-400">
+                        {spec}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
+
+                  <Link href="/contact" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest group-hover:text-accent group-hover:gap-4 transition-all">
+                    Consultation <ArrowUpRight size={14} />
+                  </Link>
                 </div>
               </div>
-            </TabsContent>
-          );
-        })}
-      </Tabs>
-    </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </main>
   );
 }
