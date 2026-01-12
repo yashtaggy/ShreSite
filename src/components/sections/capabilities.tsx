@@ -42,18 +42,24 @@ export function Capabilities() {
 
   return (
     <section ref={containerRef} className="relative h-[400vh] bg-[#0a0a0a]">
-      {/* Sticky Container */}
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+      {/* Sticky Container */}                  
+    <div className="sticky top-0 h-screen overflow-hidden flex items-start sm:items-center">
+      <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start sm:items-center pt-24 sm:pt-0">
+
           
           {/* Left: Content Side */}
           <div className="relative z-10">
-            <header className="mb-12">
-              <p className="text-accent text-xs font-bold tracking-[0.3em] uppercase mb-2">Capabilities</p>
-              <h2 className="text-white text-4xl md:text-5xl font-bold">The Standard of Precision</h2>
-            </header>
+          <header className="mb-8 sm:mb-12">
+            <p className="text-accent text-xs font-bold tracking-[0.3em] uppercase mb-2">
+              Capabilities
+            </p>
+            <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+              The Standard of Precision
+            </h2>
+          </header>
 
-            <div className="relative h-[300px]">
+
+          <div className="relative h-[340px] sm:h-[300px]">
               {capabilities.map((cap, i) => (
                 <CapabilityText 
                   key={cap.id} 
@@ -90,14 +96,24 @@ export function Capabilities() {
 function CapabilityText({ cap, index, progress }: any) {
   const opacity = useTransform(
     progress,
-    [index * 0.23, index * 0.23 + 0.14, (index + 1) * 0.23 - 0.14, (index + 1) * 0.23],
+    [
+      index * 0.25,
+      index * 0.25 + 0.08,
+      index * 0.25 + 0.22,
+      (index + 1) * 0.25
+    ],
     [0, 1, 1, 0]
   );
   
   const y = useTransform(
     progress,
-    [index * 0.23, index * 0.23 + 0.14, (index + 1) * 0.23 - 0.14, (index + 1) * 0.2],
-    [20, 0, 0, -20]
+    [
+      index * 0.25,
+      index * 0.25 + 0.08,
+      index * 0.25 + 0.22,
+      (index + 1) * 0.25
+    ],
+    [24, 0, 0, -24]
   );
 
   return (

@@ -13,14 +13,14 @@ export default function AboutPage() {
     <main className="bg-white pt-20 overflow-hidden">
       
       {/* 1. HERO WITH ARCHITECTURAL TEXTURE */}
-      <section className="relative py-24 border-b border-slate-100 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]">
+      <section className="relative py-10 md:py-24 border-b border-slate-100 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]">
         <div className="container mx-auto px-6 text-center relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center"
           >
-            <div className="mb-12 p-4 bg-white shadow-xl shadow-slate-100 border border-slate-50">
+            <div className="mb-2 md:mb-8 p-6 bg-white shadow-xl shadow-slate-100 border border-slate-50">
               <Image 
                 src="/logo.png" 
                 alt="Shreyash Solutions" 
@@ -35,7 +35,7 @@ export default function AboutPage() {
               <h1 className="text-sm font-black uppercase tracking-[0.5em] text-accent mb-6">
                 Corporate Profile & Engineering Philosophy
               </h1>
-              <p className="text-2xl md:text-3xl text-slate-800 leading-tight font-light tracking-tight">
+              <p className="text-2xl md:text-3xl text-slate-800 leading-tight font-light tracking-tight mb-4">
                 Engineering <span className="font-bold">Indigenous Reliability</span> for the world's most demanding environments.
               </p>
             </div>
@@ -44,7 +44,7 @@ export default function AboutPage() {
       </section>
 
       {/* 2. THE STORY WITH "SIDEBAR" TECHNICAL INFO */}
-      <section className="py-24 relative">
+      <section className="pt-12 pb-24 relative">
         {/* Subtle Watermark background */}
         <div className="absolute top-40 right-0 opacity-[0.03] rotate-12 pointer-events-none hidden lg:block">
            <Settings size={600} />
@@ -72,7 +72,7 @@ export default function AboutPage() {
 
           <div className="grid lg:grid-cols-12 gap-20">
             <div className="lg:col-span-8">
-              <h2 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
                 <div className="h-8 w-1 bg-accent" /> Our Industrial Journey
               </h2>
               <div className="prose prose-slate space-y-6 text-slate-600 leading-relaxed">
@@ -108,7 +108,7 @@ export default function AboutPage() {
                   manufactured electromechanical solutions.
                 </p>
               </div>
-              <div className="p-6 border border-slate-100 bg-white">
+              <div className="p-2 border border-slate-100 bg-white">
                 <h4 className="text-xs font-bold uppercase tracking-widest mb-4 text-slate-400">Key Expertise</h4>
                 <ul className="text-sm space-y-3 font-bold text-slate-700">
                    <li className="flex items-center gap-2"><Microscope size={14} className="text-accent"/> High-Linearity Winding</li>
@@ -122,7 +122,7 @@ export default function AboutPage() {
       </section>
 
       {/* 4. MISSION & VISION */}
-      <section className="py-24 bg-slate-50 border-y border-slate-200">
+      <section className="py-12 md:py-24 bg-slate-50 border-y border-slate-200">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12">
             <div className="p-12 bg-white border border-slate-200 relative group overflow-hidden">
@@ -148,7 +148,7 @@ export default function AboutPage() {
       </section>
 
       {/* 5. CORE VALUES */}
-      <section className="py-24">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-sm font-black uppercase tracking-[0.4em] text-slate-400">Operational Excellence</h2>
@@ -172,7 +172,7 @@ export default function AboutPage() {
       </section>
 
       {/* 6. LEADERSHIP QUOTE WITH MAKE IN INDIA WATERMARK */}
-      <section className="py-32 border-t border-slate-100 relative overflow-hidden bg-white">
+      <section className="py-12 md:py-32 border-t border-slate-100 relative overflow-hidden bg-white">
         
         {/* FAINTED WATERMARK LOGO */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.24] grayscale">

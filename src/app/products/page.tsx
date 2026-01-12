@@ -85,7 +85,7 @@ const products = [
 
 export default function ProductsPage() {
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
-  const [activeImage, setActiveImage] = useState<string>('');
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
   // Reset active image to Hero whenever a new product is opened
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function ProductsPage() {
             <motion.div 
               key={product.id}
               whileHover={{ y: -8 }}
-              className="group bg-white border border-slate-200 p-8 rounded-md transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-accent/50"
+              className="group bg-white border border-slate-600/80 p-4 rounded-md transition-all duration-500 hover:shadow-[0_30px_80px_rgba(0,0,0,0.06)] hover:-translate-y-6 hover:border-accent"
             >
               <div className="aspect-square relative mb-8 overflow-hidden bg-slate-50 rounded-sm border border-slate-100">
                 <Image 
@@ -126,20 +126,26 @@ export default function ProductsPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <p className="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-                  {product.model}
-                </p>
-                <h3 className="text-lg font-bold text-slate-900 leading-tight">
-                  {product.name}
-                </h3>
-                <button 
-                  onClick={() => setSelectedProduct(product)}
-                  className="pt-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-accent transition-colors underline underline-offset-8 decoration-slate-200 group-hover:decoration-accent"
-                >
-                  View Specifications <ChevronRight size={14} />
-                </button>
-              </div>
+                <div className="space-y-2 text-center flex flex-col items-center">
+                    <p className="text-accent font-mono text-xs font-bold tracking-widest uppercase">
+                      {product.model}
+                    </p>
+
+                    <h3 className="text-lg font-bold text-slate-900 leading-tight text-center">
+                      {product.name}
+                  </h3>
+
+                  <button 
+                    onClick={() => setSelectedProduct(product)}
+                    className="pt-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] 
+                               text-slate-400 group-hover:text-accent transition-colors 
+                               underline underline-offset-8 decoration-slate-200 
+                               group-hover:decoration-accent"
+                  >
+                    View Specifications <ChevronRight size={14} />
+                  </button>
+                </div>
+
             </motion.div>
           ))}
         </div>
@@ -184,12 +190,15 @@ export default function ProductsPage() {
                   {/* Left: Product Images with Thumbnails */}
                   <div className="space-y-6">
                     <div className="aspect-square bg-slate-50 border border-slate-200 rounded-sm p-8 flex items-center justify-center relative">
-                       <Image 
-                         src={activeImage} 
-                         alt="Selected View" 
-                         fill 
-                         className="object-contain p-4" 
-                       />
+                    {activeImage && (
+                      <Image 
+                        src={activeImage}
+                        alt="Selected View"
+                        fill
+                        className="object-contain p-4"
+                      />
+                    )}
+
                     </div>
                     
                     {/* GALLERY THUMBNAILS */}

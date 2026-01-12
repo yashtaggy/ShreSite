@@ -50,7 +50,7 @@ const advantages = [
 
 export function CompetitiveEdge() {
   return (
-    <section className="relative py-32 bg-[#F8FAFC] overflow-hidden border-t border-slate-200">
+    <section className="relative py-20 sm:py-28 md:py-32 bg-[#F8FAFC] overflow-hidden border-t border-slate-200">
       {/* 1. BLUEPRINT OVERLAY */}
       <div className="absolute inset-0 opacity-[0.4] pointer-events-none" 
            style={{ backgroundImage: `radial-gradient(#CBD5E1 1px, transparent 1px)`, backgroundSize: '30px 30px' }} />
@@ -58,7 +58,7 @@ export function CompetitiveEdge() {
       <div className="container mx-auto px-6 relative">
         
         {/* SECTION HEADER */}
-        <div className="max-w-4xl mb-20">
+        <div className="max-w-4xl mb-12 sm:mb-20">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}

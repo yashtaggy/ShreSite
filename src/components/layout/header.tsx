@@ -110,7 +110,7 @@ export function Header() {
             className="lg:hidden p-2 text-slate-900"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -136,7 +136,7 @@ export function Header() {
                <button onClick={() => setIsMobileMenuOpen(false)}><X size={28} /></button>
             </div>
             
-            <nav className="flex flex-col px-10 py-16 gap-8">
+            <nav className="flex flex-col px-8 py-10 gap-5">
               {navLinks.map((link, idx) => (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -147,7 +147,7 @@ export function Header() {
                   <Link
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-4xl font-bold tracking-tight text-slate-900 active:text-accent"
+                    className="text-[22px] font-semibold tracking-wide text-slate-900 active:text-accent"
                   >
                     {link.label}
                   </Link>
@@ -156,7 +156,7 @@ export function Header() {
               <Link 
                 href="/contact?form=quote"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-8 inline-flex items-center gap-4 text-accent text-xl font-bold uppercase tracking-widest"
+                className="mt-6 inline-flex items-center gap-3 text-accent text-sm font-bold uppercase tracking-[0.25em]"
               >
                 Request a Quote <ArrowRight />
               </Link>

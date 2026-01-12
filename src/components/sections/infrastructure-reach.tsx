@@ -88,7 +88,7 @@ const productionSteps = [
 
 export function InfrastructureReach() {
   return (
-    <section className="relative py-32 bg-slate-950 overflow-hidden text-white">
+    <section className="relative py-20 sm:py-28 md:py-32 bg-slate-950 overflow-hidden text-white">
       {/* Background Blueprint Grid */}
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -99,11 +99,10 @@ export function InfrastructureReach() {
         }}
       />
 
-
       <div className="container mx-auto px-6 relative z-10">
         
         {/* 1. ANIMATED TRUST NUMBERS */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-32 border-b border-slate-900 pb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-20 sm:mb-32 border-b border-slate-900 pb-10 sm:pb-16">
           {[
             { label: "Established", value: "2015", sub: "Modern Era Manufacturing" },
             { label: "Field Deployed", value: "1000+", sub: "Mission-Critical Units" },
@@ -120,7 +119,7 @@ export function InfrastructureReach() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 sm:gap-20 items-start">
           
           {/* 2. INFRASTRUCTURE & CREDENTIALS */}
           <motion.div 
