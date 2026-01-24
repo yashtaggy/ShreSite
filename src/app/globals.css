@@ -4,28 +4,24 @@
 
 @layer base {
   :root {
-    /* Background: A very clean, slightly cool white */
-    --background: 210 40% 98%; 
+    /* Changed from 210 40% 98% (very white) to a more sophisticated tinted grey */
+    --background: 210 20% 96%; 
     --foreground: 222 47% 11%;
 
-    /* Grey: Deep Slate/Carbon for a premium engineering feel */
     --primary: 215 25% 27%; 
     --primary-foreground: 0 0% 100%;
 
-    /* Turquoise: Your signature brand color - made more vibrant */
     --accent: 174 85% 38%; 
     --accent-foreground: 0 0% 100%;
 
-    /* Secondary: Light industrial grey for cards and backgrounds */
-    --secondary: 210 20% 94%;
+    /* Secondary is now used for "Elevated" surfaces to pop against the new background */
+    --secondary: 0 0% 100%; 
     --secondary-foreground: 215 25% 27%;
 
     --muted: 210 20% 90%;
     --muted-foreground: 215 16% 47%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 174 85% 38%;
+    --border: 214 32% 85%; /* Slightly darker border for definition */
     --radius: 0.75rem;
   }
 
@@ -43,6 +39,22 @@
 
     --border: 217 32% 17%;
     --ring: 174 85% 45%;
+  }
+}
+
+@layer utilities {
+  .bg-tech-grid {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+  }
+  
+  .bg-mesh-gradient {
+    background-color: hsl(var(--background));
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(174, 85%, 38%, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(215, 25%, 27%, 0.05) 0px, transparent 50%);
   }
 }
 
@@ -107,4 +119,17 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(15, 23, 42, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+  z-index: -1;
 }
