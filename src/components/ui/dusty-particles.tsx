@@ -4,16 +4,32 @@ import React, { useRef, useEffect } from 'react';
 
 export function DustyParticles() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const isVisible = useRef(false);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) return;
 
         const cvs = canvas;
         let animationFrameId: number;
         let particles: Particle[] = [];
+
+        // Intersection Observer to stop animation when not in view
+        const observer = new IntersectionObserver(
+            (entries) => {
+                isVisible.current = entries[0].isIntersecting;
+                if (isVisible.current) {
+                    animate();
+                } else {
+                    cancelAnimationFrame(animationFrameId);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(cvs);
 
         const resizeCanvas = () => {
             const parent = cvs.parentElement;
@@ -32,18 +48,16 @@ export function DustyParticles() {
             speedY: number;
             opacity: number;
             color: string;
-            blur: number;
 
             constructor() {
                 this.x = Math.random() * cvs.width;
                 this.y = Math.random() * cvs.height;
-                this.size = Math.random() * 3 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = Math.random() * 0.6 + 0.2;
-                this.blur = Math.random() > 0.8 ? 5 : 0; // Some particles are naturally blurred "out of focus"
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.25;
+                this.speedY = (Math.random() - 0.5) * 0.25;
+                this.opacity = Math.random() * 0.4 + 0.1;
 
-                const isAccent = Math.random() > 0.7;
+                const isAccent = Math.random() > 0.8;
                 this.color = isAccent ? '174, 100%, 40%' : '215, 20%, 65%';
             }
 
@@ -59,21 +73,17 @@ export function DustyParticles() {
 
             draw() {
                 if (!ctx) return;
-                ctx.save();
                 ctx.beginPath();
-                if (this.blur > 0) {
-                    ctx.filter = `blur(${this.blur}px)`;
-                }
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = `hsla(${this.color}, ${this.opacity})`;
                 ctx.fill();
-                ctx.restore();
             }
         }
 
         const initParticles = () => {
             particles = [];
-            const densityMultiplier = window.innerWidth < 768 ? 2500 : 3500;
+            // Reduced density (increased divisor) to improve performance significantly
+            const densityMultiplier = window.innerWidth < 768 ? 6000 : 8000;
             const numParticles = Math.floor((cvs.width * cvs.height) / densityMultiplier);
             for (let i = 0; i < numParticles; i++) {
                 particles.push(new Particle());
@@ -81,6 +91,8 @@ export function DustyParticles() {
         };
 
         const animate = () => {
+            if (!isVisible.current) return;
+
             ctx.clearRect(0, 0, cvs.width, cvs.height);
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
@@ -91,11 +103,11 @@ export function DustyParticles() {
 
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
-        animate();
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
             cancelAnimationFrame(animationFrameId);
+            observer.disconnect();
         };
     }, []);
 

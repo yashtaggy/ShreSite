@@ -4,27 +4,38 @@ import React, { useRef, useEffect } from 'react';
 
 export function ParticleNetwork() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isVisible = useRef(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    // Create a local reference for TypeScript closure confidence
     const cvs = canvas;
-
     let animationFrameId: number;
     let particles: Particle[] = [];
+
+    // Optimize: Only animate when visible in the viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible.current = entries[0].isIntersecting;
+        if (isVisible.current) {
+          animate();
+        } else {
+          cancelAnimationFrame(animationFrameId);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(cvs);
 
     const resizeCanvas = () => {
       const parent = cvs.parentElement;
       if (parent) {
         cvs.width = parent.clientWidth;
         cvs.height = parent.clientHeight;
-      } else {
-        cvs.width = window.innerWidth;
-        cvs.height = window.innerHeight;
       }
       initParticles();
     };
@@ -39,9 +50,9 @@ export function ParticleNetwork() {
       constructor() {
         this.x = Math.random() * cvs.width;
         this.y = Math.random() * cvs.height;
-        this.vx = (Math.random() - 0.5) * 0.6;
-        this.vy = (Math.random() - 0.5) * 0.6;
-        this.radius = Math.random() * 2 + 0.8;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 1.5 + 0.5;
       }
 
       update() {
@@ -56,17 +67,16 @@ export function ParticleNetwork() {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // More vibrant accent color
-        ctx.fillStyle = 'hsla(174, 85%, 38%, 0.6)';
+        ctx.fillStyle = 'hsla(174, 85%, 38%, 0.5)';
         ctx.fill();
       }
     }
 
     const initParticles = () => {
       particles = [];
-      // Increased density (lowered divisor)
-      const density = window.innerWidth < 768 ? 8000 : 10000;
-      const numParticles = Math.floor((cvs.width * cvs.height) / density);
+      // Balanced density for visual impact vs performance
+      const density = window.innerWidth < 768 ? 10000 : 15000;
+      const numParticles = Math.min(Math.floor((cvs.width * cvs.height) / density), 180);
       for (let i = 0; i < numParticles; i++) {
         particles.push(new Particle());
       }
@@ -88,24 +98,25 @@ export function ParticleNetwork() {
     window.addEventListener('mouseout', handleMouseLeave);
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (!isVisible.current) return;
+
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
 
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
 
-        // Connect particles to each other
+        // Connect particles to each other (O(n^2) but capped number of particles keeps it fast)
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distSq = dx * dx + dy * dy; // Use squared distance to avoid Math.sqrt
 
-          // Increased connection distance
-          if (distance < 140) {
+          if (distSq < 14400) { // 120 * 120
+            const distance = Math.sqrt(distSq);
             ctx.beginPath();
-            // Solidified line opacity
-            ctx.strokeStyle = `hsla(215, 25%, 27%, ${0.2 - (distance / 140) * 0.2})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `hsla(215, 25%, 27%, ${0.15 - (distance / 120) * 0.15})`;
+            ctx.lineWidth = 0.6;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
@@ -115,14 +126,13 @@ export function ParticleNetwork() {
         // Connect particles to mouse
         const dxMouse = particles[i].x - mouse.x;
         const dyMouse = particles[i].y - mouse.y;
-        const distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        const distSqMouse = dxMouse * dxMouse + dyMouse * dyMouse;
 
-        // Increased mouse interaction radius
-        if (distanceMouse < 220) {
+        if (distSqMouse < 40000) { // 200 * 200
+          const distanceMouse = Math.sqrt(distSqMouse);
           ctx.beginPath();
-          // Striking mouse glow
-          ctx.strokeStyle = `hsla(174, 85%, 38%, ${0.45 - (distanceMouse / 220) * 0.45})`;
-          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = `hsla(174, 85%, 38%, ${0.4 - (distanceMouse / 200) * 0.4})`;
+          ctx.lineWidth = 1;
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(mouse.x, mouse.y);
           ctx.stroke();
@@ -134,13 +144,13 @@ export function ParticleNetwork() {
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    animate();
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
   }, []);
 

@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, Loader2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Loader2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { sendInquiry } from '@/app/actions/contact';
+import { DustyParticles } from "@/components/ui/dusty-particles";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,9 +24,20 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="bg-white min-h-screen pt-24 md:pt-32 pb-20 relative overflow-hidden">
-      {/* Subtle blueprint bg */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
+    <main className="relative min-h-screen pt-24 md:pt-32 pb-20 overflow-hidden bg-white">
+      {/* ATMOSPHERIC BACKGROUND */}
+      <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
+        <DustyParticles />
+      </div>
+
+      {/* TECHNICAL BLUEPRINT GRID */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(#00f2ff 1px, transparent 1px), linear-gradient(90deg, #00f2ff 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
+        }}
+      />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
@@ -72,8 +84,13 @@ export default function ContactPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.97 }}
                   onSubmit={handleSubmit}
-                  className="bg-slate-50 border border-slate-200 rounded-sm p-6 md:p-10 space-y-6"
+                  className="relative group bg-white border border-slate-200 rounded-sm p-6 md:p-10 space-y-6 shadow-sm hover:shadow-xl transition-all duration-500"
                 >
+                  {/* TECHNICAL CORNER ACCENTS */}
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <input name="fullName" required placeholder="Full Name" className="input" />
                     <input name="company" required placeholder="Company Name" className="input" />

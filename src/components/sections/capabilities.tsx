@@ -2,8 +2,9 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { DustyParticles } from "@/components/ui/dusty-particles";
 
 const capabilities = [
   {
@@ -30,12 +31,12 @@ const capabilities = [
     step: "04",
     description: "Agile engineering capability allowing concept-to-hardware execution for quick-turn development.",
   },
-  
+
 ];
 
 export function Capabilities() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -44,12 +45,17 @@ export function Capabilities() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[180vh] sm:h-[220vh] md:h-[240vh] bg-[#0a0a0a]"
+      className="relative h-[180vh] sm:h-[220vh] md:h-[240vh] bg-[#0a0a0a] overflow-hidden"
     >
+      {/* ATMOSPHERIC BACKGROUND */}
+      <div className="absolute inset-0 pointer-events-none z-0 opacity-30">
+        <DustyParticles />
+      </div>
+
       <div className="sticky top-0 h-screen overflow-hidden flex items-center py-8 sm:py-12 md:py-16">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
-            
+
             {/* Left: Content Side */}
             <div className="relative z-10 order-2 lg:order-1">
               <header className="mb-6 lg:mb-10">
@@ -64,11 +70,11 @@ export function Capabilities() {
               {/* Text Container - Reduced height */}
               <div className="relative h-[180px] sm:h-[200px] lg:h-[240px] xl:h-[280px]">
                 {capabilities.map((cap, i) => (
-                  <CapabilityText 
-                    key={cap.id} 
-                    cap={cap} 
-                    index={i} 
-                    progress={scrollYProgress} 
+                  <CapabilityText
+                    key={cap.id}
+                    cap={cap}
+                    index={i}
+                    progress={scrollYProgress}
                   />
                 ))}
               </div>
@@ -76,18 +82,41 @@ export function Capabilities() {
 
             {/* Right: Visual Side */}
             <div className="relative w-full max-w-2xl mx-auto h-[200px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[400px]">
-              <div className="absolute inset-0 rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 shadow-xl lg:shadow-2xl">
+              {/* DYNAMIC GLOW BACKGROUND */}
+              <motion.div
+                style={{
+                  background: useTransform(
+                    scrollYProgress,
+                    [0, 0.33, 0.66, 1],
+                    [
+                      "radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)"
+                    ]
+                  )
+                }}
+                className="absolute -inset-20 pointer-events-none z-0"
+              />
+
+              <div className="absolute inset-0 rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 shadow-xl lg:shadow-2xl z-10 bg-slate-900">
                 {capabilities.map((cap, i) => (
-                  <CapabilityImage 
-                    key={cap.id} 
-                    id={cap.id} 
-                    index={i} 
-                    progress={scrollYProgress} 
+                  <CapabilityImage
+                    key={cap.id}
+                    id={cap.id}
+                    index={i}
+                    progress={scrollYProgress}
                   />
                 ))}
+
+                {/* QC SCAN LINE EFFECT */}
+                <motion.div
+                  style={{
+                    top: useTransform(scrollYProgress, [0, 1], ["-10%", "110%"])
+                  }}
+                  className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent z-30 opacity-50 blur-[1px]"
+                />
               </div>
-              {/* Reduced decorative blur size */}
-              <div className="absolute -bottom-2 -right-2 lg:-bottom-4 lg:-right-4 w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 blur-2xl rounded-full" />
             </div>
           </div>
         </div>
@@ -100,28 +129,28 @@ function CapabilityText({ cap, index, progress }: any) {
   const opacity = useTransform(
     progress,
     [
-      index * 0.25, 
+      index * 0.25,
       index * 0.25 + 0.02,
       index * 0.25 + 0.20,
       (index + 1) * 0.25
     ],
     [0, 1, 1, 0]
   );
-  
+
   const y = useTransform(
     progress,
     [
-      index * 0.25, 
-      index * 0.25 + 0.05, 
-      index * 0.25 + 0.20, 
+      index * 0.25,
+      index * 0.25 + 0.05,
+      index * 0.25 + 0.20,
       (index + 1) * 0.25
     ],
     [15, 0, 0, -15]
   );
 
   return (
-    <motion.div 
-      style={{ opacity, y }} 
+    <motion.div
+      style={{ opacity, y }}
       className="absolute inset-0 flex flex-col justify-center"
     >
       <span className="text-white/30 font-mono text-2xl sm:text-4xl lg:text-5xl mb-2 sm:mb-3 italic">
@@ -139,7 +168,7 @@ function CapabilityText({ cap, index, progress }: any) {
 
 function CapabilityImage({ id, index, progress }: any) {
   const image = PlaceHolderImages.find((img) => img.id === id);
-  
+
   const clipPath = useTransform(
     progress,
     [index * 0.25, (index + 1) * 0.25],
@@ -153,8 +182,8 @@ function CapabilityImage({ id, index, progress }: any) {
   );
 
   return (
-    <motion.div 
-      style={{ clipPath, zIndex: index }} 
+    <motion.div
+      style={{ clipPath, zIndex: index }}
       className="absolute inset-0 bg-slate-900"
     >
       {image && (

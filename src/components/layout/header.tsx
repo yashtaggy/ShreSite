@@ -12,8 +12,7 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About Us' },
-  { href: '/products', label: 'Products & Solutions' },
-  { href: '/infrastructure', label: 'Quality & Infrastructure' },
+  { href: '/products', label: 'Products & Services' },
   { href: '/industries', label: 'Industries' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -39,16 +38,16 @@ export function Header() {
   }, []);
 
   return (
-    <header 
+    <header
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-500 ease-in-out",
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-md py-3 shadow-sm border-b border-slate-200/60" 
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md py-3 shadow-sm border-b border-slate-200/60"
           : "bg-transparent py-8 border-b border-transparent"
       )}
     >
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-6 lg:px-10">
-        
+
         {/* LOGO */}
         <Link href="/" className="flex items-center shrink-0">
           <Image
@@ -79,7 +78,7 @@ export function Header() {
               >
                 {link.label}
                 {isActive && (
-                  <motion.span 
+                  <motion.span
                     layoutId="header-underline"
                     className="absolute -bottom-1 left-0 h-[2px] w-full bg-accent"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
@@ -92,12 +91,12 @@ export function Header() {
 
         {/* ACTION AREA */}
         <div className="flex items-center gap-6">
-          <Link 
+          <Link
             href="/contact?form=quote"
             className={cn(
               "hidden md:flex items-center gap-2 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-sm",
-              isScrolled 
-                ? "bg-accent text-white shadow-md hover:bg-slate-900 shadow-accent/20" 
+              isScrolled
+                ? "bg-accent text-white shadow-md hover:bg-slate-900 shadow-accent/20"
                 : "bg-white/10 backdrop-blur-md border border-white/20 text-slate-800 hover:bg-white hover:text-accent"
             )}
           >
@@ -106,7 +105,7 @@ export function Header() {
           </Link>
 
           {/* MOBILE TOGGLE */}
-          <button 
+          <button
             className="lg:hidden p-2 text-slate-900"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -124,7 +123,7 @@ export function Header() {
       {/* MOBILE OVERLAY */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
@@ -132,10 +131,10 @@ export function Header() {
             className="fixed inset-0 top-0 left-0 w-full h-screen bg-white z-[60] lg:hidden"
           >
             <div className="flex justify-between items-center p-6 border-b border-slate-100">
-               <Image src="/logo.png" alt="Logo" width={140} height={35} />
-               <button onClick={() => setIsMobileMenuOpen(false)}><X size={28} /></button>
+              <Image src="/logo.png" alt="Logo" width={140} height={35} />
+              <button onClick={() => setIsMobileMenuOpen(false)}><X size={28} /></button>
             </div>
-            
+
             <nav className="flex flex-col px-8 py-10 gap-5">
               {navLinks.map((link, idx) => (
                 <motion.div
@@ -153,7 +152,7 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
-              <Link 
+              <Link
                 href="/contact?form=quote"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="mt-6 inline-flex items-center gap-3 text-accent text-sm font-bold uppercase tracking-[0.25em]"

@@ -22,7 +22,7 @@ export function Footer() {
             </Link>
             <p className="text-sm text-slate-500 leading-relaxed">
               Specialized MSME manufacturing unit delivering mission-critical
-              electromechanical sensing solutions for Defense and Aerospace OEMs since 2015.
+              electromechanical sensing solutions for Defense and Aerospace OEMs since 2017.
             </p>
             <div className="flex space-x-3">
               <Link href="https://www.linkedin.com/company/shreyash-solutions/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-200 rounded-sm hover:border-accent hover:text-accent transition-all">
@@ -36,8 +36,7 @@ export function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-6 border-l-2 border-accent pl-3">Navigation</h4>
             <ul className="space-y-3 text-sm font-medium">
               <li><Link href="/about" className="text-slate-600 hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link href="/products" className="text-slate-600 hover:text-accent transition-colors">Products & Solutions</Link></li>
-              <li><Link href="/services" className="text-slate-600 hover:text-accent transition-colors">Manufacturing Services</Link></li>
+              <li><Link href="/products" className="text-slate-600 hover:text-accent transition-colors">Products & Services</Link></li>
               <li><Link href="/industries" className="text-slate-600 hover:text-accent transition-colors">Industries Served</Link></li>
               <li><Link href="/contact" className="text-slate-600 hover:text-accent transition-colors">Request a Quote</Link></li>
             </ul>
@@ -58,10 +57,10 @@ export function Footer() {
                 <Mail className="h-4 w-4 text-accent shrink-0" />
                 <a href="mailto:shreyashsolutions.sales@gmail.com" className="text-sm text-slate-600 hover:text-accent">shreyashsolutions.sales@gmail.com</a>
               </div>
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-accent shrink-0" />
                 <a href="tel:+919689954861" className="text-sm font-bold text-slate-900">+919689954861 / +919860047472</a>
-              </div>
+              </div> */}
               <div className="mt-4 pt-4 border-t border-slate-100">
                 <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Lead Engineer:</p>
                 <p className="text-sm font-bold text-slate-800">Mr. Bharat B. Tagunde</p>
