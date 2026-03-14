@@ -68,9 +68,6 @@ export default function ContactPage() {
               <p className="text-lg md:text-2xl font-bold text-slate-900 break-all">
                 shreyashsolutions.sales@gmail.com
               </p>
-              <p className="text-base md:text-xl text-slate-500">
-                +91 96899 54861 / +91 98600 47472
-              </p>
             </div>
           </div>
 

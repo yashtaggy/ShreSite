@@ -92,7 +92,7 @@ export default function AboutPage() {
               </h2>
               <div className="prose prose-slate space-y-6 text-slate-600 leading-relaxed">
                 <p>
-                  Established in 2015, Shreyash Solutions was born from a specialized vision:
+                  Established in 2017, Shreyash Solutions was born from a specialized vision:
                   to eliminate the dependency of Indian OEMs on imported sensing technologies.
                   In an era where precision components were often "black-box" imports, we
                   chose the harder path - mastering the internal engineering of

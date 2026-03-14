@@ -110,7 +110,7 @@ export function InfrastructureReach() {
         {/* 1. ANIMATED TRUST NUMBERS */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-20 sm:mb-32 border-b border-slate-900 pb-10 sm:pb-16">
           {[
-            { label: "Established", value: "2015", sub: "Modern Era Manufacturing" },
+            { label: "Established", value: "2017", sub: "Modern Era Manufacturing" },
             { label: "Field Deployed", value: "1000+", sub: "Mission-Critical Units" },
             { label: "Custom Solutions", value: "16+", sub: "Specialized R&D Projects" },
             { label: "Linearity", value: "0.05%", sub: "Industry Gold Standard" }
