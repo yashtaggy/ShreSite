@@ -30,6 +30,7 @@ const capabilities = [
     step: "04",
     description: "Agile engineering capability allowing concept-to-hardware execution for quick-turn development.",
   },
+  
 ];
 
 export function Capabilities() {

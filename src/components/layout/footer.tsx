@@ -7,25 +7,25 @@ export function Footer() {
     <footer className="bg-white border-t border-slate-200 text-slate-900 pt-16 pb-8">
       <div className="container mx-auto max-w-screen-2xl px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          
+
           {/* COLUMN 1: BRANDING */}
           <div className="space-y-6">
             <Link href="/" className="inline-block">
-              <Image 
-                src="/logo.png" 
-                alt="Shreyash Solutions Logo" 
-                width={180} 
-                height={60} 
+              <Image
+                src="/logo.png"
+                alt="Shreyash Solutions Logo"
+                width={180}
+                height={60}
                 className="h-auto w-auto"
                 priority
               />
             </Link>
             <p className="text-sm text-slate-500 leading-relaxed">
-              Specialized MSME manufacturing unit delivering mission-critical 
+              Specialized MSME manufacturing unit delivering mission-critical
               electromechanical sensing solutions for Defense and Aerospace OEMs since 2015.
             </p>
             <div className="flex space-x-3">
-              <Link href="https://linkedin.com" className="p-2 border border-slate-200 rounded-sm hover:border-accent hover:text-accent transition-all">
+              <Link href="https://www.linkedin.com/company/shreyash-solutions/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-200 rounded-sm hover:border-accent hover:text-accent transition-all">
                 <Linkedin className="h-4 w-4" />
               </Link>
             </div>
@@ -50,7 +50,7 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-accent mt-1 shrink-0" />
                 <p className="text-sm text-slate-600">
-                SR. NO. 63/12/4, 305, Lake Bridge, Jambhulwadi Road,  Pune-411046<br />
+                  SR. NO. 63/12/4, 305, Lake Bridge, Jambhulwadi Road,  Pune-411046<br />
                   <span className="text-xs text-slate-400"></span>
                 </p>
               </div>
@@ -74,12 +74,12 @@ export function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-6 border-l-2 border-accent pl-3">Our Location</h4>
             <div className="w-full h-40 bg-slate-100 rounded-sm overflow-hidden border border-slate-200 relative group">
               {/* Replace the URL below with your actual Google Maps Embed Link */}
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121059.0344739699!2d73.78056541640625!3d18.524890199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43105d9a2be3!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen 
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121059.0344739699!2d73.78056541640625!3d18.524890199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43105d9a2be3!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
                 loading="lazy"
                 className="grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
               ></iframe>
@@ -99,19 +99,19 @@ export function Footer() {
             <Link href="/terms" className="hover:text-accent transition-colors">Terms & Conditions</Link>
             <Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link>
           </div>
-          
+
           <div className="text-[11px] font-medium text-slate-400">
             Designed & Developed by{" "}
-            <a 
-              href="https://www.linkedin.com/in/yash-t-a4330b1b5/"         
-              target="_blank" 
+            <a
+              href="https://www.linkedin.com/in/yash-t-a4330b1b5/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-slate-900 font-bold border-b border-accent/30 hover:text-accent hover:border-accent transition-all cursor-pointer"
             >
               Yash Tagunde
-                </a>
-              </div>
+            </a>
           </div>
+        </div>
       </div>
     </footer>
   );
