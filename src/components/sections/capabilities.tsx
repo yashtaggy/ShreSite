@@ -45,30 +45,30 @@ export function Capabilities() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[180vh] sm:h-[220vh] md:h-[240vh] bg-[#0a0a0a] overflow-hidden"
+      className="relative h-[200vh] bg-[#0a0a0a]"
     >
       {/* ATMOSPHERIC BACKGROUND */}
-      <div className="absolute inset-0 pointer-events-none z-0 opacity-30">
+      <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
         <DustyParticles />
       </div>
 
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center py-8 sm:py-12 md:py-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
 
             {/* Left: Content Side */}
             <div className="relative z-10 order-2 lg:order-1">
-              <header className="mb-6 lg:mb-10">
-                <p className="text-accent text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                  Capabilities
+              <header className="mb-8 md:mb-12">
+                <p className="text-accent text-[10px] font-bold uppercase tracking-[0.4em] mb-2">
+                  Technical Arsenal
                 </p>
-                <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                  The Standard of Precision
+                <h2 className="text-white text-3xl md:text-5xl font-bold leading-tight tracking-tighter">
+                  Engineered for <br /><span className="text-accent italic">Precision</span>
                 </h2>
               </header>
 
-              {/* Text Container - Reduced height */}
-              <div className="relative h-[180px] sm:h-[200px] lg:h-[240px] xl:h-[280px]">
+              {/* Fixed height container for text to prevent layout shift */}
+              <div className="relative h-[160px] md:h-[200px]">
                 {capabilities.map((cap, i) => (
                   <CapabilityText
                     key={cap.id}
@@ -81,25 +81,8 @@ export function Capabilities() {
             </div>
 
             {/* Right: Visual Side */}
-            <div className="relative w-full max-w-2xl mx-auto h-[200px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[400px]">
-              {/* DYNAMIC GLOW BACKGROUND */}
-              <motion.div
-                style={{
-                  background: useTransform(
-                    scrollYProgress,
-                    [0, 0.33, 0.66, 1],
-                    [
-                      "radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%)",
-                      "radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, transparent 70%)",
-                      "radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)",
-                      "radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)"
-                    ]
-                  )
-                }}
-                className="absolute -inset-20 pointer-events-none z-0"
-              />
-
-              <div className="absolute inset-0 rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 shadow-xl lg:shadow-2xl z-10 bg-slate-900">
+            <div className="relative w-full max-w-xl mx-auto aspect-square md:aspect-[4/3] order-1 lg:order-2">
+              <div className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-slate-900">
                 {capabilities.map((cap, i) => (
                   <CapabilityImage
                     key={cap.id}
@@ -109,15 +92,24 @@ export function Capabilities() {
                   />
                 ))}
 
-                {/* QC SCAN LINE EFFECT */}
+                {/* Subtle Scan Line */}
                 <motion.div
-                  style={{
-                    top: useTransform(scrollYProgress, [0, 1], ["-10%", "110%"])
+                  animate={{
+                    top: ["0%", "100%", "0%"],
                   }}
-                  className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent z-30 opacity-50 blur-[1px]"
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="absolute left-0 w-full h-[1px] bg-accent/30 z-30 blur-[1px]"
                 />
               </div>
+
+              {/* Decorative Accent */}
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/10 blur-3xl rounded-full -z-10" />
             </div>
+
           </div>
         </div>
       </div>
@@ -126,26 +118,20 @@ export function Capabilities() {
 }
 
 function CapabilityText({ cap, index, progress }: any) {
+  const step = 0.25;
+  const start = index * step;
+  const end = (index + 1) * step;
+
   const opacity = useTransform(
     progress,
-    [
-      index * 0.25,
-      index * 0.25 + 0.02,
-      index * 0.25 + 0.20,
-      (index + 1) * 0.25
-    ],
+    [start, start + 0.05, end - 0.05, end],
     [0, 1, 1, 0]
   );
 
   const y = useTransform(
     progress,
-    [
-      index * 0.25,
-      index * 0.25 + 0.05,
-      index * 0.25 + 0.20,
-      (index + 1) * 0.25
-    ],
-    [15, 0, 0, -15]
+    [start, start + 0.05, end - 0.05, end],
+    [20, 0, 0, -20]
   );
 
   return (
@@ -153,13 +139,13 @@ function CapabilityText({ cap, index, progress }: any) {
       style={{ opacity, y }}
       className="absolute inset-0 flex flex-col justify-center"
     >
-      <span className="text-white/30 font-mono text-2xl sm:text-4xl lg:text-5xl mb-2 sm:mb-3 italic">
+      <span className="text-accent/30 font-mono text-4xl md:text-6xl font-black mb-4 italic opacity-50">
         {cap.step}
       </span>
-      <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">
+      <h3 className="text-xl md:text-3xl font-bold text-white mb-4">
         {cap.title}
       </h3>
-      <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-md">
+      <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-sm">
         {cap.description}
       </p>
     </motion.div>
@@ -168,35 +154,36 @@ function CapabilityText({ cap, index, progress }: any) {
 
 function CapabilityImage({ id, index, progress }: any) {
   const image = PlaceHolderImages.find((img) => img.id === id);
+  const step = 0.25;
+  const start = index * step;
 
-  const clipPath = useTransform(
+  // Real "Moving" transition: Slips in from the right
+  const x = useTransform(
     progress,
-    [index * 0.25, (index + 1) * 0.25],
-    ["inset(100% 0% 0% 0%)", "inset(0% 0% 0% 0%)"]
+    [start - 0.1, start, start + 0.25],
+    ["100%", "0%", "-20%"]
   );
 
-  const scale = useTransform(
+  const opacity = useTransform(
     progress,
-    [index * 0.25, (index + 1) * 0.25],
-    [1.1, 1]
+    [start - 0.05, start, start + 0.25, start + 0.3],
+    [0, 1, 1, 0]
   );
 
   return (
     <motion.div
-      style={{ clipPath, zIndex: index }}
-      className="absolute inset-0 bg-slate-900"
+      style={{ x, opacity, zIndex: index }}
+      className="absolute inset-0"
     >
       {image && (
-        <motion.div style={{ scale }} className="h-full w-full">
-          <Image
-            src={image.imageUrl}
-            alt="Capability"
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover opacity-70"
-            priority={index === 0}
-          />
-        </motion.div>
+        <Image
+          src={image.imageUrl}
+          alt="Capability"
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-cover brightness-75"
+          priority={index === 0}
+        />
       )}
     </motion.div>
   );
