@@ -2,93 +2,38 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronRight, Info, ArrowRight } from 'lucide-react';
+import { X, ChevronRight, Info, ArrowRight, Loader2, Package } from 'lucide-react';
 import { DustyParticles } from "@/components/ui/dusty-particles";
 import Image from 'next/image';
 import Link from 'next/link';
-
-const products = [
-  {
-    id: 'sy-901',
-    model: 'SY-901001',
-    name: 'Precision Wire-wound Potentiometer',
-    image: '/products/SP_01/Hero.png',
-    gallery: [
-      '/products/SP_01/Hero.png',
-      '/products/SP_01/angle1.png',
-      '/products/SP_01/angle2.png',
-      '/products/SP_01/angle3.png'
-    ],
-    specs: { technology: 'Precision Wire-wound', diameter: '22.2 mm', turns: '10 Turn', resistance: '1kΩ to 100kΩ', electricalAngle: '3600° ±2°', mechanicalAngle: '3600° +10°', tolerance: '±5%', linearity: '±0.25%', ipRating: 'IP65', rotationalLife: '2 Million Shaft Revolutions' }
-  },
-  {
-    id: 'sy-902',
-    model: 'SY-901002',
-    name: 'Conductive Plastic Sensor',
-    image: '/products/SP_02/Hero.png',
-    gallery: [
-      '/products/SP_02/Hero.png',
-      '/products/SP_02/angle1.png',
-      '/products/SP_02/angle2.png'
-    ],
-    specs: { technology: 'Conductive Plastic', diameter: '13 mm', turns: 'Single Turn', resistance: '1kΩ to 50kΩ', electricalAngle: '340° ±2°', mechanicalAngle: '360° Continuous', tolerance: '±10%', linearity: '±1%', ipRating: 'IP67', rotationalLife: '20 Million Revolutions' }
-  },
-  {
-    id: 'sy-903',
-    model: 'SY-901003',
-    name: 'Hollow Shaft Potentiometer',
-    image: '/products/SP_03/Hero.png',
-    gallery: [
-      '/products/SP_03/Hero.png',
-      '/products/SP_03/angle1.png',
-      '/products/SP_03/angle2.png',
-      '/products/SP_03/angle3.png'
-    ],
-    specs: { technology: 'Wire-wound', diameter: '30 mm', turns: 'Single Turn', resistance: '5kΩ', electricalAngle: '350°', mechanicalAngle: '360°', tolerance: '±5%', linearity: '±0.5%', ipRating: 'IP54', rotationalLife: '1 Million Revolutions' }
-  },
-  {
-    id: 'sy-904',
-    model: 'SY-901004',
-    name: 'Servo Mount Precision',
-    image: '/products/SP_04/Hero.png',
-    gallery: [
-      '/products/SP_04/Hero.png',
-      '/products/SP_04/angle1.png',
-      '/products/SP_04/angle2.png'
-    ],
-    specs: { technology: 'Hybrid', diameter: '22 mm', turns: '3 Turn', resistance: '10kΩ', electricalAngle: '1080°', mechanicalAngle: '1090°', tolerance: '±3%', linearity: '±0.1%', ipRating: 'IP65', rotationalLife: '5 Million Revolutions' }
-  },
-  {
-    id: 'sy-905',
-    model: 'SY-901005',
-    name: 'Industrial Grade Linear',
-    image: '/products/SP_05/Hero.png',
-    gallery: [
-      '/products/SP_05/Hero.png',
-      '/products/SP_05/angle1.png',
-      '/products/SP_05/angle2.png',
-      '/products/SP_05/angle3.png'
-    ],
-    specs: { technology: 'Wire-wound', diameter: '25 mm', turns: '5 Turn', resistance: '2kΩ to 20kΩ', electricalAngle: '1800°', mechanicalAngle: '1810°', tolerance: '±5%', linearity: '±0.2%', ipRating: 'IP65', rotationalLife: '2 Million Revolutions' }
-  },
-  {
-    id: 'sy-906',
-    model: 'SY-901006',
-    name: 'Miniature Precision Pot',
-    image: '/products/SP_06/Hero.png',
-    gallery: [
-      '/products/SP_06/Hero.png',
-      '/products/SP_06/angle1.png'
-    ],
-    specs: { technology: 'Conductive Plastic', diameter: '9 mm', turns: 'Single Turn', resistance: '1kΩ to 10kΩ', electricalAngle: '300°', mechanicalAngle: '310°', tolerance: '±20%', linearity: '±2%', ipRating: 'IP40', rotationalLife: '10 Million Revolutions' }
-  },
-];
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { Product } from '@/lib/types';
 
 export default function ProductsPage() {
-  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
-  // Reset active image to Hero whenever a new product is opened
+  useEffect(() => {
+    const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const prods = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Product[];
+      setProducts(prods);
+      setLoading(false);
+    }, (error) => {
+      console.error("Firestore Error:", error);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Reset active image to Primary whenever a new product is opened
   useEffect(() => {
     if (selectedProduct) {
       setActiveImage(selectedProduct.image);
@@ -128,72 +73,83 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* 3x2 PRODUCT GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, idx) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              className="group relative bg-white border border-slate-200 p-6 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] hover:border-accent hover:z-20"
-            >
-              {/* TECHNICAL CORNER ACCENTS */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+        {loading ? (
+          <div className="h-64 flex flex-col items-center justify-center space-y-4">
+            <Loader2 className="animate-spin text-accent" size={48} />
+            <p className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-slate-400">Synchronizing Strategic Data...</p>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="bg-white border border-dashed border-slate-200 p-20 text-center rounded-sm">
+            <Package className="mx-auto text-slate-200 mb-4" size={48} />
+            <p className="text-slate-400 font-mono text-[10px] uppercase tracking-widest font-black italic">Inventory Depleted: No units registered</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product, idx) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10 }}
+                className="group relative bg-white border border-slate-200 p-6 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] hover:border-accent hover:z-20"
+              >
+                {/* TECHNICAL CORNER ACCENTS */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-slate-100 group-hover:border-accent/40 transition-colors" />
 
-              <div className="relative aspect-square mb-10 overflow-hidden bg-slate-50/50 flex items-center justify-center p-8 group-hover:bg-accent/[0.02] transition-colors rounded-sm shadow-inner group-hover:shadow-none">
-                {/* BLUEPRINT DOTS IN IMAGE BG */}
-                <div className="absolute inset-0 opacity-[0.2] pointer-events-none"
-                  style={{ backgroundImage: `radial-gradient(circle, #000 0.5px, transparent 0.5px)`, backgroundSize: '12px 12px' }} />
+                <div className="relative aspect-square mb-10 overflow-hidden bg-slate-50/50 flex items-center justify-center p-8 group-hover:bg-accent/[0.02] transition-colors rounded-sm shadow-inner group-hover:shadow-none">
+                  {/* BLUEPRINT DOTS IN IMAGE BG */}
+                  <div className="absolute inset-0 opacity-[0.2] pointer-events-none"
+                    style={{ backgroundImage: `radial-gradient(circle, #000 0.5px, transparent 0.5px)`, backgroundSize: '12px 12px' }} />
 
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-8 transition-all duration-700 scale-90 group-hover:scale-100 group-hover:rotate-1"
-                />
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-8 transition-all duration-700 scale-90 group-hover:scale-100 group-hover:rotate-1"
+                  />
 
-                {/* OVERLAY TAG */}
-                <div className="absolute top-4 left-4 flex flex-col items-start gap-1">
-                  <span className="text-[8px] font-mono font-bold bg-slate-900 text-white px-2 py-0.5 tracking-tighter">PN: {product.id.toUpperCase()}</span>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-start gap-4">
-                  <div>
-                    <p className="text-accent font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
-                      {product.model}
-                    </p>
-                    <h3 className="text-xl font-bold text-slate-900 leading-tight group-hover:text-accent transition-colors">
-                      {product.name}
-                    </h3>
+                  {/* OVERLAY TAG */}
+                  <div className="absolute top-4 left-4 flex flex-col items-start gap-1">
+                    <span className="text-[8px] font-mono font-bold bg-slate-900 text-white px-2 py-0.5 tracking-tighter">PN: {product.model.toUpperCase()}</span>
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-widest">Indigenously Built</span>
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] 
-                               text-slate-900 hover:text-accent transition-all group/btn"
-                  >
-                    Open Datasheet
-                    <div className="p-1 bg-slate-950 text-white rounded-full group-hover/btn:bg-accent group-hover/btn:translate-x-1 transition-all">
-                      <ChevronRight size={10} />
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <p className="text-accent font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
+                        {product.model}
+                      </p>
+                      <h3 className="text-xl font-bold text-slate-900 leading-tight group-hover:text-accent transition-colors">
+                        {product.name}
+                      </h3>
                     </div>
-                  </button>
-                </div>
-              </div>
+                  </div>
 
-            </motion.div>
-          ))}
-        </div>
+                  <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-widest">Indigenously Built</span>
+                    <button
+                      onClick={() => setSelectedProduct(product)}
+                      className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] 
+                                text-slate-900 hover:text-accent transition-all group/btn"
+                    >
+                      Open Datasheet
+                      <div className="p-1 bg-slate-950 text-white rounded-full group-hover/btn:bg-accent group-hover/btn:translate-x-1 transition-all">
+                        <ChevronRight size={10} />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* TECHNICAL MODAL (Pop-up) */}
@@ -243,12 +199,11 @@ export default function ProductsPage() {
                           className="object-contain p-4"
                         />
                       )}
-
                     </div>
 
                     {/* GALLERY THUMBNAILS */}
                     <div className="flex flex-wrap gap-2">
-                      {selectedProduct.gallery.map((img, idx) => (
+                      {selectedProduct.gallery?.map((img, idx) => (
                         <button
                           key={idx}
                           onClick={() => setActiveImage(img)}
@@ -259,23 +214,35 @@ export default function ProductsPage() {
                       ))}
                     </div>
 
-                    <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-sm">
-                      <p className="text-[11px] text-blue-800 leading-relaxed font-medium">
-                        <Info size={12} className="inline mr-2 mb-0.5" />
-                        Custom modifications available for shaft length, electrical angle, and terminal housing.
-                      </p>
-                    </div>
+                    {(selectedProduct.customMessage || "Custom modifications available for shaft length, electrical angle, and terminal housing.") && (
+                      <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-sm">
+                        <p className="text-[11px] text-blue-800 leading-relaxed font-medium">
+                          <Info size={12} className="inline mr-2 mb-0.5" />
+                          {selectedProduct.customMessage || "Custom modifications available for shaft length, electrical angle, and terminal housing."}
+                        </p>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Right: Spec Table */}
+                  {/* Right: Spec Table and Description */}
                   <div className="space-y-6">
+                    {selectedProduct.description && (
+                      <div className="mb-8 p-4 bg-slate-50 border-l-2 border-accent">
+                        <p className="text-sm text-slate-600 font-light leading-relaxed italic">
+                          "{selectedProduct.description}"
+                        </p>
+                      </div>
+                    )}
+
                     <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 border-b pb-2">Operational Parameters</h4>
                     <div className="space-y-3">
-                      {Object.entries(selectedProduct.specs).map(([key, value]) => (
-                        <div key={key} className="flex justify-between py-2 border-b border-slate-50 text-sm">
-                          <span className="text-slate-400 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
-                          <span className="font-bold text-slate-900 text-right ml-4">{value}</span>
-                        </div>
+                      {Object.entries(selectedProduct.specs || {}).map(([key, value]) => (
+                        value && (
+                          <div key={key} className="flex justify-between py-2 border-b border-slate-50 text-sm">
+                            <span className="text-slate-400 capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
+                            <span className="font-bold text-slate-900 text-right ml-4">{value}</span>
+                          </div>
+                        )
                       ))}
                     </div>
                   </div>
