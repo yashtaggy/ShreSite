@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { collection, query, orderBy, onSnapshot, deleteDoc, doc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, deleteDoc, doc, addDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db, storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,6 +36,7 @@ export default function AdminDashboard() {
     });
     const [primaryImage, setPrimaryImage] = useState<File | null>(null);
     const [galleryImages, setGalleryImages] = useState<File[]>([]);
+    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [formLoading, setFormLoading] = useState(false);
     const [formError, setFormError] = useState('');
 
@@ -66,6 +67,28 @@ export default function AdminDashboard() {
         router.push('/admin/login');
     };
 
+    const handleEdit = (product: Product) => {
+        setEditingProduct(product);
+        setFormData({
+            name: product.name,
+            model: product.model,
+            description: product.description || '',
+            customMessage: product.customMessage || '',
+            specs: { ...DEFAULT_SPECS, ...product.specs }
+        });
+        setPrimaryImage(null);
+        setGalleryImages([]);
+        setActiveTab('add');
+    };
+
+    const handleCancel = () => {
+        setEditingProduct(null);
+        setFormData({ name: '', model: '', description: '', customMessage: '', specs: { ...DEFAULT_SPECS } });
+        setPrimaryImage(null);
+        setGalleryImages([]);
+        setActiveTab('inventory');
+    };
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'primary' | 'gallery') => {
         if (e.target.files) {
             if (type === 'primary') {
@@ -84,7 +107,7 @@ export default function AdminDashboard() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!primaryImage) {
+        if (!editingProduct && !primaryImage) {
             setFormError('Primary image is required.');
             return;
         }
@@ -93,27 +116,49 @@ export default function AdminDashboard() {
         setFormError('');
 
         try {
-            // 1. Upload Primary Image
-            const primaryUrl = await uploadImage(primaryImage, `products/${formData.model}/primary_${Date.now()}`);
+            // 1. Upload Primary Image if changed
+            let primaryUrl = editingProduct?.image || '';
+            if (primaryImage) {
+                primaryUrl = await uploadImage(primaryImage, `products/${formData.model}/primary_${Date.now()}`);
+            }
 
-            // 2. Upload Gallery Images
-            const galleryUrls = await Promise.all(
-                galleryImages.map((file, i) => uploadImage(file, `products/${formData.model}/gallery_${i}_${Date.now()}`))
-            );
+            // 2. Upload Gallery Images if changed
+            let galleryUrls = editingProduct?.gallery || [];
+            if (galleryImages.length > 0) {
+                const newGalleryUrls = await Promise.all(
+                    galleryImages.map((file, i) => uploadImage(file, `products/${formData.model}/gallery_${i}_${Date.now()}`))
+                );
+                // If editing, we replace the gallery with the new selection + the primary image
+                galleryUrls = [primaryUrl, ...newGalleryUrls];
+            } else if (primaryImage && editingProduct) {
+                // If only primary image changed during edit, update the first item in gallery
+                galleryUrls = [primaryUrl, ...galleryUrls.slice(1)];
+            } else if (!editingProduct) {
+                // For new products, gallery is just primary if no others
+                galleryUrls = [primaryUrl];
+            }
 
             // 3. Save to Firestore
-            await addDoc(collection(db, 'products'), {
+            const productData = {
                 ...formData,
                 image: primaryUrl,
-                gallery: [primaryUrl, ...galleryUrls],
-                createdAt: serverTimestamp()
-            });
+                gallery: galleryUrls,
+            };
+
+            if (editingProduct) {
+                await updateDoc(doc(db, 'products', editingProduct.id!), {
+                    ...productData,
+                    updatedAt: serverTimestamp()
+                });
+            } else {
+                await addDoc(collection(db, 'products'), {
+                    ...productData,
+                    createdAt: serverTimestamp()
+                });
+            }
 
             // Reset
-            setFormData({ name: '', model: '', description: '', customMessage: '', specs: { ...DEFAULT_SPECS } });
-            setPrimaryImage(null);
-            setGalleryImages([]);
-            setActiveTab('inventory');
+            handleCancel();
         } catch (err: any) {
             console.error(err);
             setFormError('Failed to save product details.');
@@ -166,7 +211,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex gap-4">
                         <Button
-                            onClick={() => setActiveTab(activeTab === 'add' ? 'inventory' : 'add')}
+                            onClick={() => activeTab === 'add' ? handleCancel() : setActiveTab('add')}
                             className={`h-12 px-6 rounded-sm uppercase text-[10px] font-black tracking-widest gap-2 transition-all ${activeTab === 'add' ? 'bg-slate-200 text-slate-600 hover:bg-slate-300' : 'bg-accent text-white hover:bg-slate-900'}`}
                         >
                             {activeTab === 'add' ? <><X size={16} /> Cancel</> : <><Plus size={16} /> Add Product</>}
@@ -224,6 +269,12 @@ export default function AdminDashboard() {
 
                                                 <div className="flex gap-2">
                                                     <Button
+                                                        onClick={() => handleEdit(product)}
+                                                        className="flex-1 bg-slate-900 text-white hover:bg-accent transition-all rounded-sm uppercase text-[9px] font-black tracking-widest h-10 gap-2 border-none"
+                                                    >
+                                                        <Edit3 size={14} /> Edit
+                                                    </Button>
+                                                    <Button
                                                         onClick={() => handleDelete(product)}
                                                         className="flex-1 bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition-all rounded-sm uppercase text-[9px] font-black tracking-widest h-10 gap-2"
                                                     >
@@ -248,11 +299,15 @@ export default function AdminDashboard() {
                                 {/* TECHNICAL HEADER */}
                                 <div className="mb-10 flex items-center gap-4">
                                     <div className="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-sm">
-                                        <PlusCircle className="text-accent" size={24} />
+                                        {editingProduct ? <Edit3 className="text-accent" size={24} /> : <PlusCircle className="text-accent" size={24} />}
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl font-black uppercase tracking-tighter text-slate-900 leading-none">Add New Product</h2>
-                                        <p className="text-slate-400 font-mono text-[9px] uppercase mt-1 tracking-widest">Enter product details below</p>
+                                        <h2 className="text-2xl font-black uppercase tracking-tighter text-slate-900 leading-none">
+                                            {editingProduct ? 'Edit Product' : 'Add New Product'}
+                                        </h2>
+                                        <p className="text-slate-400 font-mono text-[9px] uppercase mt-1 tracking-widest">
+                                            {editingProduct ? `Updating ${editingProduct.model}` : 'Enter product details below'}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -302,10 +357,30 @@ export default function AdminDashboard() {
                                         <div className="space-y-4">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Primary Product Image</label>
                                             <div className="aspect-video bg-slate-50 border-2 border-dashed border-slate-100 rounded-sm flex flex-col items-center justify-center p-4 text-center group hover:border-accent transition-colors relative overflow-hidden">
-                                                {primaryImage ? (
+                                                {primaryImage || (editingProduct && editingProduct.image) ? (
                                                     <>
-                                                        <Image src={URL.createObjectURL(primaryImage)} alt="Preview" fill className="object-contain" />
-                                                        <button onClick={() => setPrimaryImage(null)} className="absolute top-2 right-2 bg-slate-900 text-white p-1 rounded-full"><X size={12} /></button>
+                                                        <Image
+                                                            src={primaryImage ? URL.createObjectURL(primaryImage) : editingProduct!.image}
+                                                            alt="Preview"
+                                                            fill
+                                                            className="object-contain"
+                                                        />
+                                                        <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                            <p className="text-[8px] font-black text-white uppercase tracking-widest">Click to change</p>
+                                                        </div>
+                                                        <input type="file" onChange={(e) => handleFileChange(e, 'primary')} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
+                                                        {primaryImage && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    setPrimaryImage(null);
+                                                                }}
+                                                                className="absolute top-2 right-2 bg-slate-900 text-white p-1 rounded-full z-10"
+                                                            >
+                                                                <X size={12} />
+                                                            </button>
+                                                        )}
                                                     </>
                                                 ) : (
                                                     <>
@@ -320,11 +395,19 @@ export default function AdminDashboard() {
                                         <div className="space-y-4">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Product Gallery</label>
                                             <div className="grid grid-cols-4 gap-2">
-                                                {galleryImages.map((file, i) => (
-                                                    <div key={i} className="aspect-square bg-slate-50 border border-slate-100 rounded-sm relative">
-                                                        <Image src={URL.createObjectURL(file)} alt="Preview" fill className="object-contain" />
-                                                    </div>
-                                                ))}
+                                                {galleryImages.length > 0 ? (
+                                                    galleryImages.map((file, i) => (
+                                                        <div key={i} className="aspect-square bg-slate-50 border border-slate-100 rounded-sm relative">
+                                                            <Image src={URL.createObjectURL(file)} alt="Preview" fill className="object-contain" />
+                                                        </div>
+                                                    ))
+                                                ) : editingProduct && editingProduct.gallery ? (
+                                                    editingProduct.gallery.slice(1).map((url, i) => (
+                                                        <div key={i} className="aspect-square bg-slate-50 border border-slate-100 rounded-sm relative">
+                                                            <Image src={url} alt="Gallery" fill className="object-contain" />
+                                                        </div>
+                                                    ))
+                                                ) : null}
                                                 <div className="aspect-square bg-slate-50 border border-dashed border-slate-200 rounded-sm flex items-center justify-center text-slate-400 hover:border-accent hover:text-accent transition-all relative">
                                                     <Plus size={20} />
                                                     <input type="file" multiple onChange={(e) => handleFileChange(e, 'gallery')} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
@@ -365,7 +448,14 @@ export default function AdminDashboard() {
                                         type="submit"
                                         className="h-14 px-10 bg-slate-900 hover:bg-accent text-white font-black uppercase tracking-[0.2em] text-[10px] gap-3 rounded-sm min-w-[240px] transition-all"
                                     >
-                                        {formLoading ? <Loader2 className="animate-spin" size={18} /> : <><Save size={18} /> Save Product</>}
+                                        {formLoading ? (
+                                            <Loader2 className="animate-spin" size={18} />
+                                        ) : (
+                                            <>
+                                                <Save size={18} />
+                                                {editingProduct ? 'Update Product' : 'Save Product'}
+                                            </>
+                                        )}
                                     </Button>
                                 </div>
                             </form>
