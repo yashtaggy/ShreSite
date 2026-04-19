@@ -34,8 +34,8 @@ export default function AdminDashboard() {
         customMessage: '',
         specs: { ...DEFAULT_SPECS }
     });
-    const [primaryImage, setPrimaryImage] = useState<File | null>(null);
-    const [galleryImages, setGalleryImages] = useState<File[]>([]);
+    const [primaryImage, setPrimaryImage] = useState<File | string | null>(null);
+    const [galleryItems, setGalleryItems] = useState<(File | string)[]>([]);
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [formLoading, setFormLoading] = useState(false);
     const [formError, setFormError] = useState('');
@@ -76,8 +76,8 @@ export default function AdminDashboard() {
             customMessage: product.customMessage || '',
             specs: { ...DEFAULT_SPECS, ...product.specs }
         });
-        setPrimaryImage(null);
-        setGalleryImages([]);
+        setPrimaryImage(product.image);
+        setGalleryItems(product.gallery.slice(1));
         setActiveTab('add');
     };
 
@@ -85,7 +85,7 @@ export default function AdminDashboard() {
         setEditingProduct(null);
         setFormData({ name: '', model: '', description: '', customMessage: '', specs: { ...DEFAULT_SPECS } });
         setPrimaryImage(null);
-        setGalleryImages([]);
+        setGalleryItems([]);
         setActiveTab('inventory');
     };
 
@@ -94,7 +94,7 @@ export default function AdminDashboard() {
             if (type === 'primary') {
                 setPrimaryImage(e.target.files[0]);
             } else {
-                setGalleryImages(Array.from(e.target.files));
+                setGalleryItems(prev => [...prev, ...Array.from(e.target.files!)]);
             }
         }
     };
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!editingProduct && !primaryImage) {
+        if (!primaryImage) {
             setFormError('Primary image is required.');
             return;
         }
@@ -116,33 +116,29 @@ export default function AdminDashboard() {
         setFormError('');
 
         try {
-            // 1. Upload Primary Image if changed
-            let primaryUrl = editingProduct?.image || '';
-            if (primaryImage) {
+            // 1. Upload/Resolve Primary Image
+            let primaryUrl = '';
+            if (primaryImage instanceof File) {
                 primaryUrl = await uploadImage(primaryImage, `products/${formData.model}/primary_${Date.now()}`);
+            } else {
+                primaryUrl = primaryImage as string;
             }
 
-            // 2. Upload Gallery Images if changed
-            let galleryUrls = editingProduct?.gallery || [];
-            if (galleryImages.length > 0) {
-                const newGalleryUrls = await Promise.all(
-                    galleryImages.map((file, i) => uploadImage(file, `products/${formData.model}/gallery_${i}_${Date.now()}`))
-                );
-                // If editing, we replace the gallery with the new selection + the primary image
-                galleryUrls = [primaryUrl, ...newGalleryUrls];
-            } else if (primaryImage && editingProduct) {
-                // If only primary image changed during edit, update the first item in gallery
-                galleryUrls = [primaryUrl, ...galleryUrls.slice(1)];
-            } else if (!editingProduct) {
-                // For new products, gallery is just primary if no others
-                galleryUrls = [primaryUrl];
-            }
+            // 2. Upload/Resolve Gallery Items
+            const galleryUrls = await Promise.all(
+                galleryItems.map(async (item, i) => {
+                    if (item instanceof File) {
+                        return await uploadImage(item, `products/${formData.model}/gallery_${i}_${Date.now()}`);
+                    }
+                    return item as string;
+                })
+            );
 
             // 3. Save to Firestore
             const productData = {
                 ...formData,
                 image: primaryUrl,
-                gallery: galleryUrls,
+                gallery: [primaryUrl, ...galleryUrls],
             };
 
             if (editingProduct) {
@@ -357,10 +353,10 @@ export default function AdminDashboard() {
                                         <div className="space-y-4">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Primary Product Image</label>
                                             <div className="aspect-video bg-slate-50 border-2 border-dashed border-slate-100 rounded-sm flex flex-col items-center justify-center p-4 text-center group hover:border-accent transition-colors relative overflow-hidden">
-                                                {primaryImage || (editingProduct && editingProduct.image) ? (
+                                                {primaryImage ? (
                                                     <>
                                                         <Image
-                                                            src={primaryImage ? URL.createObjectURL(primaryImage) : editingProduct!.image}
+                                                            src={primaryImage instanceof File ? URL.createObjectURL(primaryImage) : primaryImage}
                                                             alt="Preview"
                                                             fill
                                                             className="object-contain"
@@ -369,18 +365,17 @@ export default function AdminDashboard() {
                                                             <p className="text-[8px] font-black text-white uppercase tracking-widest">Click to change</p>
                                                         </div>
                                                         <input type="file" onChange={(e) => handleFileChange(e, 'primary')} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
-                                                        {primaryImage && (
-                                                            <button
-                                                                type="button"
-                                                                onClick={(e) => {
-                                                                    e.preventDefault();
-                                                                    setPrimaryImage(null);
-                                                                }}
-                                                                className="absolute top-2 right-2 bg-slate-900 text-white p-1 rounded-full z-10"
-                                                            >
-                                                                <X size={12} />
-                                                            </button>
-                                                        )}
+                                                        <button
+                                                            type="button"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                setPrimaryImage(null);
+                                                            }}
+                                                            className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full z-10 hover:bg-red-600 transition-colors shadow-lg"
+                                                            title="Delete Primary Image"
+                                                        >
+                                                            <Trash2 size={12} />
+                                                        </button>
                                                     </>
                                                 ) : (
                                                     <>
@@ -395,19 +390,23 @@ export default function AdminDashboard() {
                                         <div className="space-y-4">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Product Gallery</label>
                                             <div className="grid grid-cols-4 gap-2">
-                                                {galleryImages.length > 0 ? (
-                                                    galleryImages.map((file, i) => (
-                                                        <div key={i} className="aspect-square bg-slate-50 border border-slate-100 rounded-sm relative">
-                                                            <Image src={URL.createObjectURL(file)} alt="Preview" fill className="object-contain" />
-                                                        </div>
-                                                    ))
-                                                ) : editingProduct && editingProduct.gallery ? (
-                                                    editingProduct.gallery.slice(1).map((url, i) => (
-                                                        <div key={i} className="aspect-square bg-slate-50 border border-slate-100 rounded-sm relative">
-                                                            <Image src={url} alt="Gallery" fill className="object-contain" />
-                                                        </div>
-                                                    ))
-                                                ) : null}
+                                                {galleryItems.map((item, i) => (
+                                                    <div key={i} className="aspect-square bg-slate-50 border border-slate-100 rounded-sm relative group/item">
+                                                        <Image
+                                                            src={item instanceof File ? URL.createObjectURL(item) : item}
+                                                            alt="Gallery"
+                                                            fill
+                                                            className="object-contain"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setGalleryItems(prev => prev.filter((_, idx) => idx !== i))}
+                                                            className="absolute -top-1 -right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity z-10 shadow-sm"
+                                                        >
+                                                            <Trash2 size={10} />
+                                                        </button>
+                                                    </div>
+                                                ))}
                                                 <div className="aspect-square bg-slate-50 border border-dashed border-slate-200 rounded-sm flex items-center justify-center text-slate-400 hover:border-accent hover:text-accent transition-all relative">
                                                     <Plus size={20} />
                                                     <input type="file" multiple onChange={(e) => handleFileChange(e, 'gallery')} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
