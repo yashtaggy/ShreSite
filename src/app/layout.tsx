@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   },
   description:
     'High-quality potentiometric sensors, fluid level sensors, and electromechanical assemblies for various industries including defense, automotive, and automation.',
+  verification: {
+    google: 'P97r7tR6NnST0-FUZTSPr4QttdscxRyAjlakdyjcvEM',
+  },
 };
 
 export default function RootLayout({
