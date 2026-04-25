@@ -8,11 +8,24 @@ import { BackToTop } from "@/components/ui/back-to-top";
 
 export const metadata: Metadata = {
   title: {
-    default: 'Shreyash Solutions',
+    default: 'Shreyash Solutions | Precision Potentiometric Sensors & Electromechanical Assemblies',
     template: '%s | Shreyash Solutions',
   },
   description:
-    'High-quality potentiometric sensors, fluid level sensors, and electromechanical assemblies for various industries including defense, automotive, and automation.',
+    'Shreyash Solutions is a leading MSME manufacturer in Pune, India, specializing in high-precision potentiometric sensors, wire-wound & conductive plastic elements, and custom electromechanical assemblies for Defense, Aerospace, and Industrial sectors.',
+  keywords: [
+    'potentiometric sensors',
+    'linear potentiometers',
+    'wire-wound sensors',
+    'conductive plastic sensors',
+    'fluid level sensors',
+    'electromechanical assemblies',
+    'defense manufacturing India',
+    'aerospace sensors India',
+    'MSME Pune',
+    'indigenous engineering',
+    'Atmanirbhar Bharat sensors',
+  ],
   verification: {
     google: 'P97r7tR6NnST0-FUZTSPr4QttdscxRyAjlakdyjcvEM',
   },

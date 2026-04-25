@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PenTool, Cog, ClipboardCheck, type LucideIcon } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Our Services',
-  description: 'Discover our expert services, including potentiometric sensor design, precision winding, and third-party inspection.',
+  title: 'Engineering Services | Custom Sensor Design & Winding',
+  description: 'Specialized engineering services including custom potentiometric sensor design, high-precision wire winding, and third-party inspection for electronic components in Pune.',
 };
 
 type Service = {
