@@ -65,11 +65,20 @@ export default function ProductsPage() {
             <span className="text-accent italic">Sensors & Specs</span>
           </h1>
 
-          <div className="flex flex-col md:flex-row gap-8 items-start">
+          <div className="flex flex-col gap-8">
             <p className="text-slate-500 text-xl max-w-xl leading-relaxed font-light">
               Shreyash Solutions delivers indigenous, mission-critical potentiometric
               hardware engineered for extreme linear accuracy and MIL-spec reliability.
             </p>
+
+            <div className="prose prose-slate max-w-2xl text-slate-500 text-sm leading-relaxed border-l-2 border-accent/20 pl-6 space-y-4">
+              <p>
+                As a premier <strong>industrial potentiometer manufacturer in Pune</strong>, we specialize in high-precision sensing elements that serve as the backbone of modern industrial control. Our product portfolio includes <strong>wire-wound potentiometers</strong>, <strong>conductive plastic sensors</strong>, and specialized <strong>fluid level sensors</strong> designed for the harshest operational environments.
+              </p>
+              <p>
+                Every unit we manufacture in India is the result of rigorous engineering—from the selection of high-grade resistive wire to the final validation using calibrated digital instrumentation. Our sensors are widely recognized by <strong>aerospace sensor suppliers in India</strong> for their stability under thermal stress and mechanical vibration, ensuring absolute signal integrity for aircraft control systems, radar platforms, and heavy-duty industrial machinery.
+              </p>
+            </div>
           </div>
         </div>
 

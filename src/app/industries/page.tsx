@@ -11,8 +11,8 @@ const sectors = [
     id: 'aerospace',
     title: 'Aerospace & Defense',
     icon: <Plane className="w-6 h-6" />,
-    image: '/industries/aerospace.jpg', // Place your image here
-    description: 'Mission-critical sensing for cockpit controls, UAV surfaces, and radar positioning where failure is not an option. Our components are engineered to withstand extreme G-forces, high-altitude atmospheric shifts, and electromagnetic interference, ensuring absolute signal integrity in flight-safety systems and defense electronics.',
+    image: '/industries/aerospace.jpg',
+    description: 'As a specialized aerospace sensor supplier in India, we provide mission-critical sensing for cockpit controls, UAV control surfaces, and radar positioning where failure is not an option. Our industrial potentiometers are engineered to withstand extreme G-forces, high-altitude atmospheric shifts, and electromagnetic interference. Typical use cases include flap position feedback in fixed-wing aircraft and turret rotation sensing in defense vehicles, ensuring absolute signal integrity in flight-safety systems and defense electronics.',
     specs: ['MIL-SPEC Durability', 'High Vibration Resistance', 'Redundant Circuitry'],
   },
   {
@@ -20,7 +20,7 @@ const sectors = [
     title: 'Medical Technology',
     icon: <Stethoscope className="w-6 h-6" />,
     image: '/industries/medical.jpg',
-    description: 'Precision feedback for diagnostic imaging, surgical robotics, and fluid management systems with biocompatible standards. We provide ultra-low torque solutions for delicate instrumentation and high-resolution feedback for MRI/CT gantry positioning, meeting the stringent hygiene and accuracy requirements of modern healthcare.',
+    description: 'Providing precision feedback for diagnostic imaging, surgical robotics, and fluid management systems with biocompatible standards. Our potentiometric sensors offer ultra-low torque solutions for delicate instrumentation and high-resolution feedback for MRI/CT gantry positioning. In the medical field, our sensors are used in infusion pumps and patient handling systems, meeting the stringent hygiene, non-magnetic, and sub-micron accuracy requirements of modern healthcare environments.',
     specs: ['Sub-micron Accuracy', 'Clean-room Assembly', 'Ultra-low Torque'],
   },
   {
@@ -28,7 +28,7 @@ const sectors = [
     title: 'Industrial Automation',
     icon: <Settings2 className="w-6 h-6" />,
     image: '/industries/automation.jpg',
-    description: 'The nervous system for robotic joints, CNC feedback, and high-speed packaging lines requiring long-cycle stability. Designed for 24/7 heavy-duty operations, our sensors provide the millisecond response times necessary for synchronized multi-axis motion control and automated manufacturing environments.',
+    description: 'We serve as the nervous system for robotic joints, CNC feedback, and high-speed packaging lines. Our industrial potentiometers manufactured in India are designed for 24/7 heavy-duty operations, providing the millisecond response times necessary for synchronized multi-axis motion control. Common use cases include conveyor speed monitoring, robotic arm articulation feedback, and automated valve positioning in chemical processing plants.',
     specs: ['20M+ Cycle Life', 'IP67 Sealing', 'High Frequency Response'],
   },
   {
@@ -36,7 +36,7 @@ const sectors = [
     title: 'Heavy Machinery',
     icon: <Truck className="w-6 h-6" />,
     image: '/industries/machinery.jpg',
-    description: 'Ruggedized positioning for hydraulic booms, agricultural steering, and crane stabilization in extreme environments. Our heavy-duty sensors are built into sealed housings that resist dust, mud, and high-pressure washdowns, providing reliable angular feedback for operator safety and machine efficiency in construction and mining.',
+    description: 'Ruggedized positioning for hydraulic booms, agricultural steering, and crane stabilization in extreme environments. Our heavy-duty industrial sensors are built into sealed housings that resist dust, mud, and high-pressure washdowns. They provide reliable angular feedback for operator safety in constructon and mining equipment, such as excavators, reach stackers, and specialized agricultural harvesters operating in the Indian terrain.',
     specs: ['Impact Resistance', 'Shielded Signal', 'Weather-proof Housing'],
   },
   {
@@ -44,7 +44,7 @@ const sectors = [
     title: 'Renewable Energy',
     icon: <Zap className="w-6 h-6" />,
     image: '/industries/renewables.jpg',
-    description: 'Optimizing solar tracking arrays and wind turbine pitch control for maximum efficiency and long-term UV exposure. These components are specifically treated for outdoor longevity, ensuring that tracking mechanisms remain precise over decades of exposure to harsh sunlight, wind loads, and fluctuating temperatures.',
+    description: 'Optimizing solar tracking arrays and wind turbine pitch control for maximum efficiency and long-term UV exposure. Shreyash Solutions provides sensors specifically treated for outdoor longevity, ensuring that solar tracking mechanisms remain precise over decades of exposure. Our potentiometers are used for wind turbine blade pitch adjustment and solar panel inclination sensing, contributing to the Atmanirbhar Bharat mission in the green energy sector.',
     specs: ['UV Stable Housing', 'Zero Maintenance', 'Long-term Stability'],
   }
 ];
@@ -55,22 +55,22 @@ export default function IndustriesPage() {
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
 
       <div className="container mx-auto px-6 relative z-10">
-        
+
         {/* HEADER */}
         <div className="max-w-4xl mb-20">
-  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3 text-accent mb-6">
-    <div className="h-[2px] w-8 bg-accent" />
-    <span className="text-[10px] font-black uppercase tracking-[0.4em]">What We Do</span>
-  </motion.div>
-  
-  <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
-    Industries <br/>
-    <span className="text-accent italic font-serif font-light">We Serve.</span>
-  </h1>
-  <p className="text-xl text-slate-600 max-w-2xl leading-relaxed font-medium">
-    High-quality sensors and potentiometers designed for the most demanding technical fields in India and beyond.
-  </p>
-</div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3 text-accent mb-6">
+            <div className="h-[2px] w-8 bg-accent" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em]">What We Do</span>
+          </motion.div>
+
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
+            Industries <br />
+            <span className="text-accent italic font-serif font-light">We Serve.</span>
+          </h1>
+          <p className="text-xl text-slate-600 max-w-2xl leading-relaxed font-medium">
+            High-quality sensors and potentiometers designed for the most demanding technical fields in India and beyond.
+          </p>
+        </div>
 
         {/* 3x2 GRID SYSTEM */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -88,8 +88,8 @@ export default function IndustriesPage() {
               {/* Image Container */}
               <div className="relative h-56 w-full overflow-hidden bg-slate-200">
                 <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-all duration-500 z-10" />
-                <img 
-                  src={sector.image} 
+                <img
+                  src={sector.image}
                   alt={sector.title}
                   className="w-full h-full object-cover group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                 />
@@ -103,7 +103,7 @@ export default function IndustriesPage() {
                   </div>
                   <h3 className="text-2xl font-black tracking-tight">{sector.title}</h3>
                 </div>
-                
+
                 <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
                   {sector.description}
                 </p>

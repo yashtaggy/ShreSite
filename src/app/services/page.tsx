@@ -16,18 +16,18 @@ type Service = {
 const services: Service[] = [
   {
     icon: PenTool,
-    title: 'Potentiometric Sensor Design',
-    description: 'Collaborate with our engineers to design custom potentiometric sensors tailored to your exact specifications and application needs.',
+    title: 'Custom Potentiometric Sensor Design',
+    description: 'Collaborate with our Pune-based engineering team to design custom industrial potentiometers tailored to your exact specifications. We specialize in developing unique electromechanical solutions for unconventional applications, ensuring that your sensor meets reach, torque, and electrical angle requirements perfectly. Whether you need a one-off prototype or a scalable design for mass production, our sensor design services provide the technical blueprint for success.',
   },
   {
     icon: Cog,
-    title: 'Precision Winding Services',
-    description: 'Leverage our advanced winding technology for your own components. We offer high-precision winding as a standalone service.',
+    title: 'Precision Winding Services in India',
+    description: 'Leverage our advanced, automated winding technology for your specific components. Shreyash Solutions offers high-precision wire-winding as a standalone service, catering to other manufacturers and research labs who require consistent and accurate resistive elements. Our facility is equipped to handle various wire gauges and core materials, delivering precision winding that adheres to the highest aerospace and defense standards in India.',
   },
   {
     icon: ClipboardCheck,
-    title: 'Third-Party Inspection',
-    description: 'Utilize our state-of-the-art testing facility and expertise for impartial, third-party inspection and validation of electronic components.',
+    title: 'Third-Party Inspection & Validation',
+    description: 'Ensure the reliability of your components with our state-of-the-art testing facility in Pune. We provide impartial, third-party inspection and validation services for industrial sensors and electronic assemblies. Our validation process includes electrical angle verification, linearity testing, and environmental stress screening, providing you with a certified data datasheet that benchmarks your product against global quality and reliability standards.',
   },
 ];
 
