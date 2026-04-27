@@ -5,6 +5,9 @@ import { PenTool, Cog, ClipboardCheck, type LucideIcon } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Engineering Services | Custom Sensor Design & Winding',
   description: 'Specialized engineering services including custom potentiometric sensor design, high-precision wire winding, and third-party inspection for electronic components in Pune.',
+  alternates: {
+    canonical: '/services',
+  },
 };
 
 type Service = {

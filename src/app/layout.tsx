@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { BackToTop } from "@/components/ui/back-to-top";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://shreyashsolutions.com'),
   title: {
     default: 'Shreyash Solutions | Precision Potentiometric Sensors & Electromechanical Assemblies',
     template: '%s | Shreyash Solutions',
@@ -26,6 +27,9 @@ export const metadata: Metadata = {
     'indigenous engineering',
     'Atmanirbhar Bharat sensors',
   ],
+  alternates: {
+    canonical: '/',
+  },
   verification: {
     google: 'P97r7tR6NnST0-FUZTSPr4QttdscxRyAjlakdyjcvEM',
   },
