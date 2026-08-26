@@ -73,7 +73,7 @@ export function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-widest mb-6 border-l-2 border-accent pl-3">Our Location</h4>
             <div className="w-full h-40 bg-slate-100 rounded-sm overflow-hidden border border-slate-200 relative group">
               <iframe
-                src="https://maps.google.com/maps?q=SR.+NO.+63%2F12%2F4%2C+305%2C+Lake+Bridge%2C+Jambhulwadi+Road%2C+Pune-411046&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.app.goo.gl/aBiKty4VkAjmCoK56"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
