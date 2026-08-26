@@ -35,6 +35,43 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "LocalBusiness"],
+  "name": "Shreyash Solutions",
+  "description":
+    "Shreyash Solutions is a leading MSME manufacturer in Pune, India, specializing in high-precision potentiometric sensors, wire-wound & conductive plastic elements, and custom electromechanical assemblies for Defense, Aerospace, and Industrial sectors.",
+  "url": "https://shreyashsolutions.com",
+  "telephone": ["+919689954861", "+919860047472"],
+  "email": "shreyashsolutions.sales@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "SR. NO. 63/12/4, 305, Lake Bridge, Jambhulwadi Road",
+    "addressLocality": "Pune",
+    "postalCode": "411046",
+    "addressCountry": "IN",
+  },
+  "openingHours": "Mo-Sa 09:00-18:00",
+  "sameAs": [
+    "https://www.linkedin.com/company/shreyash-solutions/about/?viewAsMember=true",
+  ],
+  "foundingDate": "2017",
+  "areaServed": ["IN"],
+  "knowsAbout": [
+    "potentiometric sensors",
+    "electromechanical assemblies",
+    "defense electronics",
+    "aerospace sensors",
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "name": "Bharat B. Tagunde",
+    "contactType": "Lead Engineer",
+    "telephone": "+919689954861",
+    "email": "shreyashsolutions.sales@gmail.com",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,6 +85,10 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className={cn('min-h-screen bg-background font-body antialiased')}>

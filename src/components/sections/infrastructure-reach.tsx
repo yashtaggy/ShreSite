@@ -23,12 +23,18 @@ import { DustyParticles } from "@/components/ui/dusty-particles";
 function AnimatedNumber({ value }: { value: string }) {
   const numericValue = parseInt(value.replace(/\D/g, ''));
   const suffix = value.replace(/[0-9]/g, '');
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(numericValue);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     if (inView) {
+      if (isInitialMount.current) {
+        isInitialMount.current = false;
+        return;
+      }
+      setCount(0);
       let startTime: number | null = null;
       const duration = 1600;
 
@@ -39,6 +45,8 @@ function AnimatedNumber({ value }: { value: string }) {
         if (progress < 1) requestAnimationFrame(animate);
       };
       requestAnimationFrame(animate);
+    } else {
+      isInitialMount.current = false;
     }
   }, [inView, numericValue]);
 

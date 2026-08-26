@@ -94,32 +94,29 @@ export default function AboutPage() {
                 <p>
                   Established in 2017, Shreyash Solutions was born from a specialized vision:
                   to eliminate the dependency of Indian OEMs on imported sensing technologies.
-                  As an emerging <strong>potentiometer manufacturer in Pune</strong>, we recognized that
+                  As one of the pioneering <strong>potentiometer manufacturers in India</strong>, we recognized that
                   in an era where precision components were often "black-box" imports, the domestic market
-                  needed a reliable alternative. We chose the harder path - mastering the internal engineering of
-                  <span className="text-slate-900 font-semibold"> Wire-wound and Conductive Plastic sensing elements</span> right here in India.
+                  needed a reliable, sovereign alternative. We chose the harder path - mastering internal engineering of
+                  <span className="text-slate-900 font-semibold"> Wire-wound and Conductive Plastic sensing elements</span> right here in Pune.
                 </p>
                 <p>
-                  Our facility in Pune serves as a hub of indigenous innovation. We don't
+                  Our facility serves as a hub of indigenous innovation. We don't
                   just assemble sensors; we engineer them from the wire up. Our technical team, led by
                   <strong> Mr. Bharat B. Tagunde</strong>, focuses on <strong>high-linearity winding</strong> and <strong>custom shaft fabrication</strong>.
                   This level of control allows us to offer tolerances as tight as <strong>±0.05%</strong>,
-                  meeting the rigorous standards of defense and aerospace research. As a
-                  <strong> industrial potentiometer manufacturer in India</strong>, our goal is to provide
-                  the scientific community and defense OEMs with hardware that is both robust and indigenously built.
+                  meeting the rigorous standards of defense research and aerospace applications.
                 </p>
                 <p>
                   Over the years, we have scaled our capabilities from a specialized
                   winding workshop to a comprehensive manufacturing unit. Today, our
                   portfolio includes 16+ field-proven custom designs, each built with the
-                  discipline of our proprietary 2150-step Process Flow Architecture. We have established ourselves
-                  as a key <strong>aerospace sensor supplier in India</strong>, collaborating with various
-                  private and public sector units to enhance strategic self-reliance.
+                  discipline of our proprietary 2150-step Process Flow Architecture. Collaborating with leading
+                  private and public sector units, we actively enhance India's strategic self-reliance in sensor technology.
                 </p>
                 <p>
                   Our commitment to the "Make in India" initiative is reflected in every product we ship.
                   By utilizing locally sourced materials where possible and 100% domestic engineering,
-                  we ensure that our <strong>industrial potentiometers</strong> and <strong>electromechanical assemblies</strong>
+                  we ensure that our <strong>potentiometers</strong> and <strong>electromechanical assemblies</strong>
                   provide a sovereign and reliable solution for the nation's most critical infrastructure.
                 </p>
               </div>

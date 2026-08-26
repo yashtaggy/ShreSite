@@ -57,10 +57,10 @@ export function Footer() {
                 <Mail className="h-4 w-4 text-accent shrink-0" />
                 <a href="mailto:shreyashsolutions.sales@gmail.com" className="text-sm text-slate-600 hover:text-accent">shreyashsolutions.sales@gmail.com</a>
               </div>
-              {/* <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-accent shrink-0" />
                 <a href="tel:+919689954861" className="text-sm font-bold text-slate-900">+919689954861 / +919860047472</a>
-              </div> */}
+              </div>
               <div className="mt-4 pt-4 border-t border-slate-100">
                 <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Lead Engineer:</p>
                 <p className="text-sm font-bold text-slate-800">Mr. Bharat B. Tagunde</p>
@@ -72,9 +72,8 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-bold uppercase tracking-widest mb-6 border-l-2 border-accent pl-3">Our Location</h4>
             <div className="w-full h-40 bg-slate-100 rounded-sm overflow-hidden border border-slate-200 relative group">
-              {/* Replace the URL below with your actual Google Maps Embed Link */}
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121059.0344739699!2d73.78056541640625!3d18.524890199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43105d9a2be3!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                src="https://maps.google.com/maps?q=SR.+NO.+63%2F12%2F4%2C+305%2C+Lake+Bridge%2C+Jambhulwadi+Road%2C+Pune-411046&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -83,7 +82,7 @@ export function Footer() {
                 className="grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
               ></iframe>
             </div>
-            <Link href="https://maps.app.goo.gl/KWqxa5c8zG9gTxsH9" className="mt-2 text-[10px] flex items-center gap-1 text-slate-400 hover:text-accent font-bold uppercase tracking-tighter">
+            <Link href="https://maps.app.goo.gl/aBiKty4VkAjmCoK56" target="_blank" rel="noopener noreferrer" className="mt-2 text-[10px] flex items-center gap-1 text-slate-400 hover:text-accent font-bold uppercase tracking-tighter">
               Get Directions <ExternalLink size={10} />
             </Link>
           </div>

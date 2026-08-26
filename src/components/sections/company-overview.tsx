@@ -15,20 +15,20 @@ export function CompanyOverview() {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-sm font-black uppercase tracking-[0.4em] text-accent mb-6">
-                            Industrial Potentiometer Manufacturer in Pune
+                            Indigenous Sensor Engineering
                         </h2>
                         <h3 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-8">
-                            Pioneering Indigenous Precision in <br />
+                            Pioneering Precision in <br />
                             <span className="text-accent italic">Indian Sensor Technology</span>
                         </h3>
 
                         <div className="prose prose-slate max-w-none text-slate-600 space-y-6 text-lg leading-relaxed">
                             <p>
-                                As a leading <strong>industrial potentiometer manufacturer in Pune</strong>, Shreyash Solutions has been at the forefront of the precision engineering sector since 2017. Our facility is strategically located in Pune’s industrial hub, enabling us to serve as a key <strong>aerospace sensor supplier in India</strong>. We specialize in the design and production of high-performance potentiometric sensors that meet stringent international quality standards, specifically catering to the defense and aerospace industries.
+                                As one of the prominent <strong>high precision sensor manufacturers India</strong> relies on, Shreyash Solutions has been at the forefront of the precision engineering sector since 2017. Operating from Pune’s industrial hub, we serve as a trusted <strong>defence sensor supplier India</strong> OEMs count on for mission-critical hardware. We specialize in the design and production of high-performance potentiometric sensors and electromechanical assemblies engineered for extreme reliability.
                             </p>
 
                             <p>
-                                Our core expertise lies in manufacturing <strong>industrial potentiometers in India</strong> that offer unparalleled reliability. By focusing on indigenous innovation under the Atmanirbhar Bharat initiative, we have successfully reduced dependence on imported sensors for critical applications. Whether it is cockpit controls, radar systems, or medical diagnostic equipment, our sensors provide the sub-micron accuracy required for mission-critical performance.
+                                By focusing on indigenous innovation under the Atmanirbhar Bharat initiative, we have successfully reduced dependence on imported components for critical applications. Whether it is cockpit controls, radar systems, or industrial automation, our sensors deliver sub-micron accuracy and long-term signal stability.
                             </p>
                         </div>
                     </motion.div>
@@ -65,7 +65,7 @@ export function CompanyOverview() {
 
                     <div className="bg-slate-50 p-8 rounded-sm border border-slate-200">
                         <p className="text-sm text-slate-500 leading-relaxed">
-                            If you are looking for a reliable <strong>industrial potentiometer manufacturer in Pune</strong> for defense-grade or aerospace applications, Shreyash Solutions offers 100% end-of-line tested hardware. Our engineering team specializes in <strong>custom shaft fabrication</strong>, <strong>high-linearity winding</strong>, and <strong>conductive plastic sensing elements</strong>, ensuring that every unit complies with MSME (UDYAM) quality benchmarks.
+                            For defense-grade or aerospace applications, Shreyash Solutions offers 100% end-of-line tested hardware. Our engineering team specializes in <strong>custom shaft fabrication</strong>, <strong>high-linearity winding</strong>, and <strong>conductive plastic sensing elements</strong>, ensuring that every unit complies with MSME (UDYAM) quality benchmarks. Currently supplying customers across multiple Indian states, we are actively expanding our scope to serve international OEMs across APAC, EMEA, and AMEA regions.
                         </p>
                     </div>
                 </div>

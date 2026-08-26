@@ -12,7 +12,8 @@ const sectors = [
     title: 'Aerospace & Defense',
     icon: <Plane className="w-6 h-6" />,
     image: '/industries/aerospace.jpg',
-    description: 'As a specialized aerospace sensor supplier in India, we provide mission-critical sensing for cockpit controls, UAV control surfaces, and radar positioning where failure is not an option. Our industrial potentiometers are engineered to withstand extreme G-forces, high-altitude atmospheric shifts, and electromagnetic interference. Typical use cases include flap position feedback in fixed-wing aircraft and turret rotation sensing in defense vehicles, ensuring absolute signal integrity in flight-safety systems and defense electronics.',
+    alt: 'High-precision potentiometric sensor for cockpit control and defense radar positioning in aerospace applications',
+    description: 'For aerospace and defense applications, we provide mission-critical sensing for cockpit controls, UAV control surfaces, and radar positioning where failure is not an option. Our potentiometers are engineered to withstand extreme G-forces, high-altitude atmospheric shifts, and electromagnetic interference. Typical use cases include flap position feedback in fixed-wing aircraft and turret rotation sensing in defense vehicles, ensuring absolute signal integrity in flight-safety systems and defense electronics.',
     specs: ['MIL-SPEC Durability', 'High Vibration Resistance', 'Redundant Circuitry'],
   },
   {
@@ -20,6 +21,7 @@ const sectors = [
     title: 'Medical Technology',
     icon: <Stethoscope className="w-6 h-6" />,
     image: '/industries/medical.jpg',
+    alt: 'Biocompatible linear potentiometer providing precision feedback for diagnostic imaging and surgical robotics',
     description: 'Providing precision feedback for diagnostic imaging, surgical robotics, and fluid management systems with biocompatible standards. Our potentiometric sensors offer ultra-low torque solutions for delicate instrumentation and high-resolution feedback for MRI/CT gantry positioning. In the medical field, our sensors are used in infusion pumps and patient handling systems, meeting the stringent hygiene, non-magnetic, and sub-micron accuracy requirements of modern healthcare environments.',
     specs: ['Sub-micron Accuracy', 'Clean-room Assembly', 'Ultra-low Torque'],
   },
@@ -28,7 +30,8 @@ const sectors = [
     title: 'Industrial Automation',
     icon: <Settings2 className="w-6 h-6" />,
     image: '/industries/automation.jpg',
-    description: 'We serve as the nervous system for robotic joints, CNC feedback, and high-speed packaging lines. Our industrial potentiometers manufactured in India are designed for 24/7 heavy-duty operations, providing the millisecond response times necessary for synchronized multi-axis motion control. Common use cases include conveyor speed monitoring, robotic arm articulation feedback, and automated valve positioning in chemical processing plants.',
+    alt: 'Heavy-duty industrial potentiometer for high-speed packaging lines, robotic joints, and CNC feedback',
+    description: 'We serve as the nervous system for robotic joints, CNC feedback, and high-speed packaging lines. Our potentiometers are designed for 24/7 heavy-duty operations, providing the millisecond response times necessary for synchronized multi-axis motion control. Common use cases include conveyor speed monitoring, robotic arm articulation feedback, and automated valve positioning in chemical processing plants.',
     specs: ['20M+ Cycle Life', 'IP67 Sealing', 'High Frequency Response'],
   },
   {
@@ -36,7 +39,8 @@ const sectors = [
     title: 'Heavy Machinery',
     icon: <Truck className="w-6 h-6" />,
     image: '/industries/machinery.jpg',
-    description: 'Ruggedized positioning for hydraulic booms, agricultural steering, and crane stabilization in extreme environments. Our heavy-duty industrial sensors are built into sealed housings that resist dust, mud, and high-pressure washdowns. They provide reliable angular feedback for operator safety in constructon and mining equipment, such as excavators, reach stackers, and specialized agricultural harvesters operating in the Indian terrain.',
+    alt: 'Ruggedized position sensor for hydraulic boom stabilization and agricultural machinery steering',
+    description: 'Ruggedized positioning for hydraulic booms, agricultural steering, and crane stabilization in extreme environments. Our heavy-duty industrial sensors are built into sealed housings that resist dust, mud, and high-pressure washdowns. They provide reliable angular feedback for operator safety in construction and mining equipment, such as excavators, reach stackers, and specialized agricultural harvesters.',
     specs: ['Impact Resistance', 'Shielded Signal', 'Weather-proof Housing'],
   },
   {
@@ -44,7 +48,8 @@ const sectors = [
     title: 'Renewable Energy',
     icon: <Zap className="w-6 h-6" />,
     image: '/industries/renewables.jpg',
-    description: 'Optimizing solar tracking arrays and wind turbine pitch control for maximum efficiency and long-term UV exposure. Shreyash Solutions provides sensors specifically treated for outdoor longevity, ensuring that solar tracking mechanisms remain precise over decades of exposure. Our potentiometers are used for wind turbine blade pitch adjustment and solar panel inclination sensing, contributing to the Atmanirbhar Bharat mission in the green energy sector.',
+    alt: 'Weather-proof potentiometric sensor for solar tracking array and wind turbine pitch control',
+    description: 'Optimizing solar tracking arrays and wind turbine pitch control for maximum efficiency and long-term UV exposure. Shreyash Solutions provides sensors specifically treated for outdoor longevity, ensuring that solar tracking mechanisms remain precise over decades of exposure. Our potentiometers are used for wind turbine blade pitch adjustment and solar panel inclination sensing, contributing to green energy infrastructure.',
     specs: ['UV Stable Housing', 'Zero Maintenance', 'Long-term Stability'],
   }
 ];
@@ -88,10 +93,12 @@ export default function IndustriesPage() {
               {/* Image Container */}
               <div className="relative h-56 w-full overflow-hidden bg-slate-200">
                 <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-all duration-500 z-10" />
-                <img
+                <Image
                   src={sector.image}
-                  alt={sector.title}
-                  className="w-full h-full object-cover group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                  alt={sector.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                 />
               </div>
 
